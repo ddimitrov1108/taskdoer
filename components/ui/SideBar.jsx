@@ -1,0 +1,71 @@
+"use client";
+import { HiXMark } from "react-icons/hi2";
+import { Logo, IconButton } from ".";
+import clsx from "clsx";
+
+const SideBar = ({
+  title,
+  open,
+  onClose,
+  showFrom = "left",
+  showLogo = true,
+  children,
+  containerClassName,
+  className,
+  headerClassName,
+  bodyClassName,
+  ...restProps
+}) => {
+  return (
+    <div
+      className={clsx("z-50 w-full h-full", containerClassName)}
+      {...restProps}
+    >
+      <div
+        onClick={onClose}
+        className={clsx(
+          "z-50 transition-all fixed top-0 right-0 left-0 bottom-0 sm:backdrop-blur-sm sm:bg-black/20",
+          open ? "block" : "hidden"
+        )}
+      ></div>
+      <div
+        className={clsx(
+          "z-50 fixed top-0 w-full sm:w-1/2 h-full transition-all ease-in-out duration-300 bg-white",
+          showFrom === "right" && "right-0",
+          showFrom === "right"
+            ? open
+              ? "translate-x-0 "
+              : "translate-x-full"
+            : "right-0",
+          showFrom === "left" ? (open ? "left-0" : "-left-full") : "",
+          className
+        )}
+      >
+        <div className="h-full overflow-auto styled-overflow">
+          <div className="relative grid">
+            <div
+              className={clsx(
+                "flex items-center w-full",
+                showLogo ? "justify-between" : "justify-end",
+                headerClassName
+              )}
+            >
+              {showLogo && <Logo />}
+              <IconButton
+                tabIndex={0}
+                aria-label="Close Menu"
+                onClick={onClose}
+                className="text-slate-400 text-xl"
+              >
+                <HiXMark />
+              </IconButton>
+            </div>
+
+            <div className={clsx("", bodyClassName)}>{children}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+export default SideBar;
