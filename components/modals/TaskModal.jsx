@@ -1,6 +1,6 @@
 import { TaskForm } from "../forms";
 import { Modal } from "../ui";
-import { HiOutlineDocumentText, HiOutlinePencilSquare } from "react-icons/hi2";
+import { HiOutlineDocumentPlus, HiOutlinePencilSquare } from "react-icons/hi2";
 
 const TaskModal = ({
   open,
@@ -14,7 +14,7 @@ const TaskModal = ({
       title={
         <div className="flex items-center gap-2">
           <div className="text-2xl text-main">
-            {editMode ? <HiOutlinePencilSquare /> : <HiOutlineDocumentText />}
+            {editMode ? <HiOutlinePencilSquare /> : <HiOutlineDocumentPlus />}
           </div>
           {editMode ? "Edit Task" : "New Task"}
         </div>

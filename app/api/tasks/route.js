@@ -36,10 +36,15 @@ export async function POST(req) {
       },
     });
 
-    console.log(newTask);
-
-    if (labels.length > 0) {
-      labels.forEach(async (l) => {});
+    if (labels.length) {
+      await Promise.all(labels.map(l =>
+        prisma.taskToLabel.create({
+          data: {
+            taskId: newTask.id,
+            labelId: l.id,
+          },
+        })
+      ));
     }
 
     return NextResponse.json({}, { status: 200 });

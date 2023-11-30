@@ -33,22 +33,49 @@ export async function DELETE(req, { params }) {
     return NextResponse.json({}, { status: 400 });
 
   const session = await getServerSession(nextAuthConfig);
-  const id = parseInt(params.id);
+  const projectId = parseInt(params.id);
 
   try {
-    await prisma.$transaction([
-      prisma.tasks.deleteMany({
-        where: {
-          pid: id,
+    const project = await prisma.projects.findUnique({
+      where: {
+        id: projectId,
+        uid: session.user.id,
+      },
+      include: {
+        tasks: {
+          include: {
+            labels: true,
+          },
         },
-      }),
-      prisma.projects.delete({
-        where: {
-          id,
-          uid: session.user.id,
-        },
-      }),
-    ]);
+      },
+    });
+
+    if (project) {
+      const labelsToDelete = project.tasks.flatMap((task) => task.labels);
+      const taskIdsToDelete = project.tasks.map((task) => task.id);
+
+      await prisma.$transaction([
+        ...labelsToDelete.map((label) =>
+          prisma.taskToLabel.deleteMany({
+            where: {
+              id: label.id,
+            },
+          })
+        ),
+        prisma.tasks.deleteMany({
+          where: {
+            id: {
+              in: taskIdsToDelete,
+            },
+          },
+        }),
+        prisma.projects.delete({
+          where: {
+            id: projectId,
+          },
+        }),
+      ]);
+    }
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {

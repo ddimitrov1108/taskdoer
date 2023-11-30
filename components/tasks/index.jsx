@@ -1,2 +1,2 @@
 export { default as Task } from "./Task";
-export { default as TaskList } from "./TasksList";
+export { default as TasksList } from "./TasksList";

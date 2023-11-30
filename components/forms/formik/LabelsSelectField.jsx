@@ -44,7 +44,7 @@ const LabelsSelectField = ({
       ) : isLoading ? (
         <Spinner className="text-primary-main" />
       ) : labels.length > 0 ? (
-        <div className="max-h-[200px] flex items-center gap-2 flex-wrap overflow-auto styled-overflow">
+        <div className="max-h-[200px] flex items-center gap-1 flex-wrap overflow-auto styled-overflow">
           {labels.map((label) => (
             <Chip
               key={label.id}

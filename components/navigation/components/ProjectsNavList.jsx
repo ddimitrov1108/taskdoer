@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { DisclouseContainer } from "../../ui";
-import { HiOutlinePlus } from "react-icons/hi2";
+import { HiOutlineFolderPlus } from "react-icons/hi2";
 import { NavLink } from ".";
 import { ProjectModal } from "../../modals";
 
@@ -33,7 +33,7 @@ const ProjectsNavList = ({ data = [], onSideBarClose = () => {} }) => {
             className="text-xl text-main hover:text-primary-main"
             onClick={onClickHandler}
           >
-            <HiOutlinePlus />
+            <HiOutlineFolderPlus />
           </button>
         }
         btnClassName="p-2 rounded-lg justify-between"

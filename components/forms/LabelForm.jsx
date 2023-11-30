@@ -1,6 +1,6 @@
 "use client";
 import { Field, Form, Formik } from "formik";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { enqueueSnackbar } from "notistack";
 import { useForm } from "../hooks";
 import { Alert, Button } from "../ui";
@@ -14,6 +14,7 @@ const LabelForm = ({
   editMode = false,
   afterFormSubmit = () => {},
 }) => {
+  const params = useParams();
   const router = useRouter();
   const [form, setForm] = useForm();
 
@@ -22,7 +23,7 @@ const LabelForm = ({
     const { name } = values;
 
     if (editMode) {
-      await fetch(`/api/labels/${label.id}`, {
+      await fetch(`/api/labels/${params.id}`, {
         method: "PUT",
         body: JSON.stringify({ name }),
       })

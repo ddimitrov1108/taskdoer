@@ -1,6 +1,6 @@
 import { Modal } from "../ui";
 import { LabelForm } from "../forms";
-import { HiOutlineDocumentText, HiOutlinePencilSquare } from "react-icons/hi2";
+import { HiOutlineFolderPlus, HiOutlinePencilSquare } from "react-icons/hi2";
 
 const LabelModal = ({
   open,
@@ -14,7 +14,7 @@ const LabelModal = ({
       title={
         <div className="flex items-center gap-2">
           <div className="text-2xl text-main">
-            {editMode ? <HiOutlinePencilSquare /> : <HiOutlineDocumentText />}
+            {editMode ? <HiOutlinePencilSquare /> : <HiOutlineFolderPlus />}
           </div>
           {editMode ? "Edit Label" : "New Label"}
         </div>

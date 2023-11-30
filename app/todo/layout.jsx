@@ -19,7 +19,7 @@ const AppLayout = async ({ children }) => {
         <HeaderBarNavigation user={session.user} data={{ projects, labels }} />
         <SideBarNavigation user={session.user} data={{ projects, labels }} />
 
-        <div className="bg-black-dark overflow-auto styled-overflow w-full mt-16 lg:mt-0 lg:ml-96 py-8 px-4 xxs:px-6 lg:px-8 xl:p-12">
+        <div className="bg-black-dark h-full w-full mt-16 lg:mt-0 lg:ml-96 py-8 px-4 xxs:px-6 lg:px-8 xl:p-12">
           <div>{children}</div>
         </div>
       </div>

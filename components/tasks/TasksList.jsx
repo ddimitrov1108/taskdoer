@@ -57,7 +57,7 @@ const TasksList = ({ tasks = [] }) => {
           afterFormSubmit={() => setOpenNewTaskModal(false)}
         />
 
-        <div className="my-24 grid justify-center items-center gap-6">
+        <div className="py-36 grid justify-center items-center gap-6">
           <Image
             src="/no-tasks.svg"
             width={256}

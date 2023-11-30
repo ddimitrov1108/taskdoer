@@ -1,5 +1,6 @@
 import {
   HiCheck,
+  HiDocumentText,
   HiOutlineEllipsisVertical,
   HiOutlinePencilSquare,
   HiOutlineSquares2X2,
@@ -8,7 +9,6 @@ import {
   HiStar,
 } from "react-icons/hi2";
 import Link from "next/link";
-import { MdOutlineStickyNote2 } from "react-icons/md";
 import { Chip, Dropdown, DropdownListItem } from "../ui";
 import { format, isPast, isToday, isTomorrow } from "date-fns";
 import { enUS } from "date-fns/locale";
@@ -84,96 +84,95 @@ const Task = ({
         </button>
       </div>
 
-      <div className="w-full flex justify-between items-center">
-        <div className="grow grid">
-          <h1
-            className={clsx(
-              "transition-all font-[500] w-full max-w-[400px] truncate ...",
-              task.completed
-                ? "line-through text-main"
-                : "text-light group-hover:text-white"
-            )}
-          >
-            {task.name}
-          </h1>
-
-          <div className="flex items-center gap-1">
-            <div
+      <div className="w-full grid gap-1">
+        <div className="w-full flex justify-between items-center">
+          <div className="grow grid">
+            <h1
               className={clsx(
-                "max-w-fit max-h-fit text-xs xxs:text-sm",
-                isPast(task.dueDate) ? "text-error-main" : "text-primary-main"
+                "transition-all font-[500] w-full max-w-[400px] truncate ...",
+                task.completed
+                  ? "line-through text-main"
+                  : "text-light group-hover:text-white"
               )}
             >
-              {isToday(task.dueDate)
-                ? "Today"
-                : isTomorrow(task.dueDate)
-                ? "Tomorrow"
-                : format(task.dueDate, "EEE, d MMM, yy", {
-                    locale: enUS,
-                  })}
+              {task.name}
+            </h1>
+
+            <div className="flex items-center gap-1">
+              <div
+                className={clsx(
+                  "max-w-fit max-h-fit text-xs xxs:text-sm",
+                  isPast(task.dueDate) ? "text-error-main" : "text-primary-main"
+                )}
+              >
+                {isToday(task.dueDate)
+                  ? "Today"
+                  : isTomorrow(task.dueDate)
+                  ? "Tomorrow"
+                  : format(task.dueDate, "EEE, d MMM, yy", {
+                      locale: enUS,
+                    })}
+              </div>
+              {task.description && (
+                <>
+                  <span className="text-main">&#8226;</span>
+                  <HiDocumentText className="text-sm text-main" />
+                </>
+              )}
             </div>
-            {task.description && (
-              <>
-                <span className="text-main">&#8226;</span>
-                <MdOutlineStickyNote2 className="text-main" />
-              </>
-            )}
           </div>
 
-          {task.labels && (
-            <div className="flex w-full items-center gap-1 py-1 overflow-auto styled-overflow-horizontal">
-              {task.labels.map((label) => (
-                <Link key={label.id} href={`/todo/labels/${label.id}`}>
-                  <Chip
-                    text={label.name}
-                    prependSymbol="@"
-                    onClick={(e) => e.stopPropagation()}
+          <div className="w-fit flex items-center">
+            <button
+              className={clsx(
+                "transition-all p-1 text-xl hover:bg-transparent",
+                task.important
+                  ? "text-warning-main"
+                  : "text-slate-500 hover:text-white"
+              )}
+              onClick={(e) => {
+                e.stopPropagation();
+                onImportantHandler(task);
+              }}
+            >
+              {task.important ? <HiStar /> : <HiOutlineStar />}
+            </button>
+
+            <Dropdown
+              btnClassName="transition-all text-2xl text-main w-full p-1 hover:text-white rounded-md flex items-center gap-3"
+              btn={<HiOutlineEllipsisVertical />}
+              menuItemsClassName="border border-black-light/40 bg-black-main p-2"
+              chevronClassName="pr-0.5"
+            >
+              {taskInteractions.map(
+                ({ id, className, iconClassName, onClick, ...item }, index) => (
+                  <DropdownListItem
+                    key={index}
+                    as="button"
+                    onClick={onClick}
+                    item={item}
+                    className={clsx(className, "hover:bg-black-light/10")}
+                    iconClassName={iconClassName}
                   />
-                </Link>
-              ))}
-            </div>
-          )}
+                )
+              )}
+            </Dropdown>
+          </div>
         </div>
 
-        <div className="w-fit flex items-center">
-          <button
-            className={clsx(
-              "transition-all p-1 text-xl hover:bg-transparent",
-              task.important
-                ? "text-warning-main"
-                : "text-slate-500 hover:text-white"
-            )}
-            onClick={(e) => {
-              e.stopPropagation();
-              onImportantHandler(task);
-            }}
-          >
-            {task.important ? <HiStar /> : <HiOutlineStar />}
-          </button>
-
-          <Dropdown
-            btnClassName="transition-all text-2xl text-main w-full p-1 hover:text-white rounded-md flex items-center gap-3"
-            btn={<HiOutlineEllipsisVertical />}
-            menuItemsClassName="border border-black-light/40 bg-black-main p-2"
-            chevronClassName="pr-0.5"
-          >
-            {taskInteractions.map(
-              ({ id, className, iconClassName, onClick, ...item }, index) => (
-                <DropdownListItem
-                  key={index}
-                  as="button"
-                  onClick={onClick}
-                  item={item}
-                  className={clsx(
-                    className,
-                    "hover:bg-black-light/10"
-                  )}
-                  iconClassName={iconClassName}
+        {task.labels.length > 0 && (
+          <div className="flex w-full items-center gap-1 py-1 overflow-auto styled-overflow-horizontal">
+            {task.labels.map((label) => (
+              <Link key={label.id} href={`/todo/labels/${label.id}`}>
+                <Chip
+                  text={label.name}
+                  prependSymbol="@"
+                  onClick={(e) => e.stopPropagation()}
                 />
-              )
-            )}
-          </Dropdown>
-        </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

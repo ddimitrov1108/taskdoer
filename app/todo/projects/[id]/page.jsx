@@ -1,5 +1,5 @@
 import { PageHeader, ProjectInteractiveButtons } from "@/components";
-import TasksList from "@/components/tasks/TasksList";
+import { TasksList } from "@/components/tasks";
 import { getProjectById } from "@/db/getProjectById";
 
 const page = async ({ params }) => {
@@ -12,7 +12,7 @@ const page = async ({ params }) => {
           type="project"
           title={
             <>
-              <div className="flex gap-4 items-center">
+              <div className="flex gap-3 items-center">
                 <div
                   className="min-w-[14px] min-h-[14px] rounded-full"
                   style={{ backgroundColor: project.color }}
@@ -29,9 +29,6 @@ const page = async ({ params }) => {
       </div>
 
       <TasksList tasks={project.tasks} />
-      {/* <div className="overflow-hidden">
-        <pre>{JSON.stringify(project, null, 4)}</pre>
-      </div> */}
     </>
   );
 };

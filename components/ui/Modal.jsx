@@ -1,9 +1,9 @@
 "use client";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdClose } from "react-icons/md";
 import { IconButton } from ".";
 import clsx from "clsx";
+import { HiXMark } from "react-icons/hi2";
 
 const Modal = ({
   open,
@@ -66,7 +66,7 @@ const Modal = ({
                       onClick={onCloseClickHandler}
                       className="text-xl"
                     >
-                      <MdClose />
+                      <HiXMark />
                     </IconButton>
                   )}
                 </Dialog.Title>

@@ -4,11 +4,8 @@ import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { DeleteConfirmationModal, ProjectModal, TaskModal } from "./modals";
 import { Button, IconButton } from "./ui";
-import {
-  HiOutlinePencilSquare,
-  HiOutlinePlus,
-  HiOutlineTrash,
-} from "react-icons/hi2";
+import { HiOutlinePencilSquare, HiPlus, HiOutlineTrash } from "react-icons/hi2";
+import { enqueueSnackbar } from "notistack";
 
 const ProjectInteractiveButtons = ({ project }) => {
   const params = useParams();
@@ -23,8 +20,8 @@ const ProjectInteractiveButtons = ({ project }) => {
     })
       .then(() => {
         enqueueSnackbar("Project deleted successfully", { variant: "success" });
+        router.replace("/todo");
         router.refresh();
-        router.replace("/myapp");
       })
       .catch((err) => {
         console.log(err);
@@ -35,7 +32,7 @@ const ProjectInteractiveButtons = ({ project }) => {
 
   const onNewTaskHandler = () => setOpenNewTaskModal(true);
   const onEditProjectHandler = () => setOpenEditProjectModal(true);
-  const onProjectDeleteHandler = () => setOpenDeleteProjectModal(true);
+  const onDeleteProjectHandler = () => setOpenDeleteProjectModal(true);
 
   return (
     <>
@@ -63,11 +60,11 @@ const ProjectInteractiveButtons = ({ project }) => {
       <div className="min-w-full md:min-w-fit flex items-center justify-between gap-2">
         <Button
           size="sm"
-          variant="text"
-          className="flex items-center gap-2 justify-center"
+          variant="primary"
+          className="flex items-center gap-1 justify-center"
           onClick={onNewTaskHandler}
         >
-          <HiOutlinePlus className="text-light text-xl" /> Add task
+          <HiPlus className="text-xl" /> Add task
         </Button>
 
         <div className="flex items-center gap-2">
@@ -81,7 +78,7 @@ const ProjectInteractiveButtons = ({ project }) => {
 
           <IconButton
             title="Delete Project"
-            onClick={onProjectDeleteHandler}
+            onClick={onDeleteProjectHandler}
             className="p-2 bg-black-light/10 text-xl"
           >
             <HiOutlineTrash className="text-error-main hover:text-error-main" />
