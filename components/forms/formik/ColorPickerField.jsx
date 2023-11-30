@@ -9,7 +9,7 @@ const ColorPickerField = ({
   fullWidth = false,
   field,
   form: { setFieldValue, errors, touched },
-  className
+  className,
 }) => {
   const onClickHandler = (color) => {
     setFieldValue(field.name, color);
@@ -17,7 +17,12 @@ const ColorPickerField = ({
 
   return (
     <div className={clsx("mb-4", className, fullWidth ? "w-full" : "w-fit")}>
-      <Label htmlFor={field.name} label={label} sublabel={sublabel} />
+      <Label
+        className="pb-2"
+        htmlFor={field.name}
+        label={label}
+        sublabel={sublabel}
+      />
 
       <div className="w-full flex flex-wrap gap-2">
         {defaultColors.map((color) => (

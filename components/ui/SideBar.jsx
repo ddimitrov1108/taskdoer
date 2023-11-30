@@ -24,13 +24,13 @@ const SideBar = ({
       <div
         onClick={onClose}
         className={clsx(
-          "z-50 transition-all fixed top-0 right-0 left-0 bottom-0 sm:backdrop-blur-sm sm:bg-black/20",
+          "transition-all fixed top-0 right-0 left-0 bottom-0 bg-black-dark/30 backdrop-blur-sm",
           open ? "block" : "hidden"
         )}
       ></div>
       <div
         className={clsx(
-          "z-50 fixed top-0 w-full sm:w-1/2 h-full transition-all ease-in-out duration-300",
+          "fixed top-0 w-full sm:w-1/2 h-full transition-all ease-in-out duration-300",
           showFrom === "right" && "right-0",
           showFrom === "right"
             ? open

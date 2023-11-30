@@ -13,9 +13,12 @@ const TextAreaField = ({
 }) => {
   return (
     <div className={clsx("mb-4", fullWidth ? "w-full" : "w-fit")}>
-      {label && (
-        <Label htmlFor={field.name} label={label} sublabel={sublabel} />
-      )}
+      <Label
+        className="pb-2"
+        htmlFor={field.name}
+        label={label}
+        sublabel={sublabel}
+      />
 
       <textarea
         autoComplete="on"

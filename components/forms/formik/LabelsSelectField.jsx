@@ -1,4 +1,5 @@
 "use client";
+
 import useSWR from "swr";
 import { fetcher } from "@/lib/swr-fetcher";
 import { Chip, Spinner } from "@/components/ui";
@@ -15,8 +16,6 @@ const LabelsSelectField = ({
   const { data: labels, error, isLoading } = useSWR("/api/labels", fetcher);
 
   const onClickHandler = (option) => {
-    alert(1);
-    console.log(field.value);
     const isContained = field.value.find((o) => o.id === option.id);
 
     if (!isContained) setFieldValue(field.name, [...field.value, option]);
@@ -33,7 +32,12 @@ const LabelsSelectField = ({
 
   return (
     <div className={clsx("mb-4", fullWidth ? "w-full" : "w-fit")}>
-      <Label htmlFor={field.name} label={label} sublabel={sublabel} />
+      <Label
+        className="pb-2"
+        htmlFor={field.name}
+        label={label}
+        sublabel={sublabel}
+      />
 
       {error ? (
         <span className="text-medium">You have no labels to show here</span>

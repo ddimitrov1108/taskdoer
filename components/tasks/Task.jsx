@@ -10,12 +10,7 @@ import {
 import Link from "next/link";
 import { MdOutlineStickyNote2 } from "react-icons/md";
 import { Chip, Dropdown, DropdownListItem } from "../ui";
-import {
-  format,
-  isPast,
-  isToday,
-  isTomorrow,
-} from "date-fns";
+import { format, isPast, isToday, isTomorrow } from "date-fns";
 import { enUS } from "date-fns/locale";
 import clsx from "clsx";
 
@@ -48,15 +43,22 @@ const Task = ({
       name: "Details",
       icon: <HiOutlineSquares2X2 />,
       onClick: onTaskClickHandler,
-      className: "hover:text-primary-main",
+      className: "text-light hover:text-white",
       iconClassName: "text-primary-main",
     },
     {
       name: "Edit",
       icon: <HiOutlinePencilSquare />,
       onClick: onTaskEditHandler,
-      className: "hover:text-primary-main",
+      className: "text-light hover:text-white",
       iconClassName: "text-primary-main",
+    },
+    {
+      name: "Delete",
+      icon: <HiOutlineTrash />,
+      onClick: onTaskDeleteHandler,
+      className: "text-error-main hover:text-error-main",
+      iconClassName: "text-error-main",
     },
   ];
 
@@ -87,7 +89,9 @@ const Task = ({
           <h1
             className={clsx(
               "transition-all font-[500] w-full max-w-[400px] truncate ...",
-              task.completed ? "line-through text-main" : "text-light group-hover:text-white"
+              task.completed
+                ? "line-through text-main"
+                : "text-light group-hover:text-white"
             )}
           >
             {task.name}
@@ -96,7 +100,7 @@ const Task = ({
           <div className="flex items-center gap-1">
             <div
               className={clsx(
-                "max-w-fit max-h-fit text-xs xs:text-sm",
+                "max-w-fit max-h-fit text-xs xxs:text-sm",
                 isPast(task.dueDate) ? "text-error-main" : "text-primary-main"
               )}
             >
@@ -162,22 +166,12 @@ const Task = ({
                   item={item}
                   className={clsx(
                     className,
-                    "text-light hover:text-white hover:bg-black-light/10"
+                    "hover:bg-black-light/10"
                   )}
                   iconClassName={iconClassName}
                 />
               )
             )}
-
-            <DropdownListItem
-              as="button"
-              onClick={onTaskDeleteHandler}
-              className="text-error-main hover:text-error-main hover:bg-black-light/10"
-              item={{
-                name: "Delete",
-                icon: <HiOutlineTrash />,
-              }}
-            />
           </Dropdown>
         </div>
       </div>

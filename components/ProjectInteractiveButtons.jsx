@@ -60,31 +60,33 @@ const ProjectInteractiveButtons = ({ project }) => {
         onSubmit={deleteProject}
       />
 
-      <div className="min-w-fit flex items-center justify-end gap-2">
+      <div className="min-w-full md:min-w-fit flex items-center justify-between gap-2">
         <Button
           size="sm"
           variant="text"
-          className="border-none flex items-center gap-2 justify-center"
+          className="flex items-center gap-2 justify-center"
           onClick={onNewTaskHandler}
         >
           <HiOutlinePlus className="text-light text-xl" /> Add task
         </Button>
 
-        <IconButton
-          title="Edit Project"
-          onClick={onEditProjectHandler}
-          className="bg-black-light/10 text-primary-main hover:text-primary-main text-xl"
-        >
-          <HiOutlinePencilSquare />
-        </IconButton>
+        <div className="flex items-center gap-2">
+          <IconButton
+            title="Edit Project"
+            onClick={onEditProjectHandler}
+            className="p-2 bg-black-light/10 text-xl"
+          >
+            <HiOutlinePencilSquare className="text-primary-main hover:text-primary-main" />
+          </IconButton>
 
-        <IconButton
-          title="Delete Project"
-          onClick={onProjectDeleteHandler}
-          className="bg-black-light/10 text-error-main hover:text-error-main text-xl"
-        >
-          <HiOutlineTrash />
-        </IconButton>
+          <IconButton
+            title="Delete Project"
+            onClick={onProjectDeleteHandler}
+            className="p-2 bg-black-light/10 text-xl"
+          >
+            <HiOutlineTrash className="text-error-main hover:text-error-main" />
+          </IconButton>
+        </div>
       </div>
     </>
   );

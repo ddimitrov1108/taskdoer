@@ -7,14 +7,14 @@ const page = async ({ params }) => {
 
   return (
     <>
-      <div className="mb-10 grid gap-4 sm:flex sm:items-end sm:justify-between">
+      <div className="mb-10 grid gap-4 md:flex md:items-end md:justify-between">
         <PageHeader
           type="project"
           title={
             <>
               <div className="flex gap-4 items-center">
                 <div
-                  className="w-3.5 h-3.5 rounded-full"
+                  className="min-w-[14px] min-h-[14px] rounded-full"
                   style={{ backgroundColor: project.color }}
                 ></div>
                 {project.name}

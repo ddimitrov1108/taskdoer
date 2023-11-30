@@ -21,7 +21,7 @@ const CheckBoxField = ({
         fullWidth ? "w-full" : "w-fit"
       )}
     >
-      <Label htmlFor={field.name} className="pb-0" label={label} sublabel={sublabel} />
+      <Label htmlFor={field.name} label={label} sublabel={sublabel} />
       <Switch
         disabled={disabled}
         checked={field.value}

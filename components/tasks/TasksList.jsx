@@ -1,12 +1,16 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { DisclouseContainer } from "../ui";
 import { useSound } from "../hooks";
 import Task from "./Task";
+import { TaskModal } from "../modals";
+import { useState } from "react";
 
-const TasksList = ({ tasks }) => {
+const TasksList = ({ tasks = [] }) => {
   const router = useRouter();
+  const [openNewTaskModal, setOpenNewTaskModal] = useState(false);
   const [isPlaying, playSound, stopSound] = useSound(
     "http://localhost:3000/task-completed.wav"
   );
@@ -43,6 +47,32 @@ const TasksList = ({ tasks }) => {
         console.log(err);
       });
   };
+
+  if (tasks.length === 0)
+    return (
+      <>
+        <TaskModal
+          open={openNewTaskModal}
+          setOpen={setOpenNewTaskModal}
+          afterFormSubmit={() => setOpenNewTaskModal(false)}
+        />
+
+        <div className="my-24 grid justify-center items-center gap-6">
+          <Image
+            src="/no-tasks.svg"
+            width={256}
+            height={256}
+            alt="no-tasks.svg"
+            className="w-24 h-24 md:w-32 md:h-32 mx-auto"
+          />
+          <p className="text-center text-main">
+            No tasks to be shown here! You either completed all of the tasks 🎉,
+            <br />
+            or havent added any tasks to this project.
+          </p>
+        </div>
+      </>
+    );
 
   const importantTasks = tasks
     .filter((e) => e.important && !e.completed)
@@ -99,7 +129,12 @@ const TasksList = ({ tasks }) => {
           open
         >
           {completedTasks.map((task) => (
-            <Task key={task.id} task={task} />
+            <Task
+              key={task.id}
+              task={task}
+              onCompletedHandler={setCompleted}
+              onImportantHandler={setImportant}
+            />
           ))}
         </DisclouseContainer>
       )}

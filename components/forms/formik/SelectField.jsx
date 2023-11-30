@@ -19,7 +19,12 @@ const SelectField = ({
 
   return (
     <div className={clsx("mb-4", fullWidth ? "w-full" : "w-fit")}>
-      <Label htmlFor={field.name} label={label} sublabel={sublabel} />
+      <Label
+        className="pb-2"
+        htmlFor={field.name}
+        label={label}
+        sublabel={sublabel}
+      />
 
       <Listbox value={field.value} onChange={onChangeHandler} className="">
         {({ open }) => (

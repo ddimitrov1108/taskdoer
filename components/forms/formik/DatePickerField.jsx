@@ -30,7 +30,12 @@ const DatePickerField = ({
 
   return (
     <div className={clsx("mb-4 min-h-fit", fullWidth ? "w-full" : "w-fit")}>
-      <Label htmlFor={field.name} label={label} sublabel={sublabel} />
+      <Label
+        className="pb-2"
+        htmlFor={field.name}
+        label={label}
+        sublabel={sublabel}
+      />
 
       <input
         disabled={disabled}

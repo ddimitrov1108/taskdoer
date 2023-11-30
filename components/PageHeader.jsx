@@ -6,9 +6,9 @@ const PageHeader = ({ type = "", title = "Title" }) => {
           {type}
         </h1>
       )}
-      <h1 className="capitalize text-2xl sm:text-3xl lg:text-4xl font-bold truncate ...">
+      <span className="capitalize text-xl xs:text-2xl lg:text-3xl font-bold truncate ...">
         {title}
-      </h1>
+      </span>
     </div>
   );
 };

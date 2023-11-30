@@ -42,7 +42,7 @@ export async function DELETE(req, { params }) {
         },
       },
       include: {
-        projects: true,
+        project: true,
       },
     });
 

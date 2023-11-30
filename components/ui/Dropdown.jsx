@@ -16,7 +16,7 @@ const Dropdown = ({
   ...restProps
 }) => {
   return (
-    <Menu as="div" className={clsx("relative", className)} {...restProps}>
+    <Menu as="div" className={clsx("", className)} {...restProps}>
       <Menu.Button
         className={btnClassName}
         onClick={(e) => e.stopPropagation()}
@@ -48,14 +48,16 @@ const Dropdown = ({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items
-          className={clsx(
-            "overflow-hidden z-40 absolute right-0 mt-2 w-56 origin-top-right rounded-lg shadow-xl focus:outline-none outline-none select-none",
-            menuItemsClassName
-          )}
-        >
-          {children}
-        </Menu.Items>
+        <div className="relative">
+          <Menu.Items
+            className={clsx(
+              "overflow-hidden z-40 absolute right-0 mt-2 w-56 origin-top-right rounded-lg shadow-xl focus:outline-none outline-none select-none",
+              menuItemsClassName
+            )}
+          >
+            {children}
+          </Menu.Items>
+        </div>
       </Transition>
     </Menu>
   );

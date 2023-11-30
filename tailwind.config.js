@@ -18,7 +18,8 @@ module.exports = {
         wiggle: "wiggle 1s ease-in-out infinite",
       },
       screens: {
-        xs: "375px",
+        xxs: "375px",
+        xs: "420px",
       },
       colors: {
         white: "#FAFAFA",

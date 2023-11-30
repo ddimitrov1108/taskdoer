@@ -10,7 +10,7 @@ const getTaskById = async (id) => {
       id,
     },
     include: {
-      projects: true,
+      project: true,
     },
   });
 };
@@ -25,10 +25,11 @@ export async function PUT(req, { params }) {
 
   try {
     const task = await getTaskById(id);
+    console.log(task);
 
     if (!task) return NextResponse.json({}, { status: 404 });
 
-    if (task.projects.uid != session.user.id)
+    if (task.project.uid != session.user.id)
       return NextResponse.json({}, { status: 403 });
 
     await prisma.tasks.update({
