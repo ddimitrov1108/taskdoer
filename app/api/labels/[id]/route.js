@@ -32,41 +32,35 @@ export async function DELETE(req, { params }) {
     return NextResponse.json({}, { status: 400 });
 
   const session = await getServerSession(nextAuthConfig);
-  const id = parseInt(params.id);
+  const labelId = parseInt(params.id);
 
   try {
-    const tasks = await prisma.tasks.findMany({
+    const label = await prisma.labels.findFirst({
       where: {
-        lid: {
-          contains: params.id,
-        },
-      },
-      include: {
-        project: true,
-      },
-    });
-
-    tasks.forEach(async (task) => {
-      if (task.projects.uid != session.user.id) return;
-
-      const newLid = JSON.parse(task.lid).filter((lid) => lid != id);
-
-      await prisma.tasks.update({
-        where: {
-          id: task.id,
-        },
-        data: {
-          lid: newLid ? JSON.stringify(newLid) : "[]",
-        },
-      });
-    });
-
-    await prisma.labels.delete({
-      where: {
-        id,
+        id: labelId,
         uid: session.user.id,
       },
+      include: {
+        tasks: true,
+      },
     });
+
+    if (label) {
+      await prisma.$transaction([
+        ...label.tasks.map((t) =>
+          prisma.taskToLabel.deleteMany({
+            where: {
+              labelId: t.labelId,
+            },
+          })
+        ),
+        prisma.labels.delete({
+          where: {
+            id: label.id,
+          },
+        }),
+      ]);
+    }
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {

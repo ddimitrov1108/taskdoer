@@ -1,9 +1,15 @@
 import { PageHeader, ProjectInteractiveButtons } from "@/components";
 import { TasksList } from "@/components/tasks";
 import { getProjectById } from "@/db/getProjectById";
+import { redirect } from "next/navigation";
+
+export const revalidate = 30
 
 const page = async ({ params }) => {
   const project = await getProjectById(params.id);
+
+  if(!project)
+  return redirect("/todo");
 
   return (
     <>

@@ -1,6 +1,8 @@
+import { TodoPageSkeleton } from "@/components/skeletons"
+
 const loading = () => {
   return (
-    <div>loading....</div>
+    <TodoPageSkeleton/>
   )
 }
 export default loading

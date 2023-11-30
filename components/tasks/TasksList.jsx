@@ -57,7 +57,7 @@ const TasksList = ({ tasks = [] }) => {
           afterFormSubmit={() => setOpenNewTaskModal(false)}
         />
 
-        <div className="py-36 grid justify-center items-center gap-6">
+        <div className="py-32 grid justify-center items-center gap-6">
           <Image
             src="/no-tasks.svg"
             width={256}
@@ -68,7 +68,7 @@ const TasksList = ({ tasks = [] }) => {
           <p className="text-center text-main">
             No tasks to be shown here! You either completed all of the tasks 🎉,
             <br />
-            or havent added any tasks to this project.
+            or havent added any tasks to this section.
           </p>
         </div>
       </>

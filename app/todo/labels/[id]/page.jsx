@@ -1,9 +1,14 @@
 import { LabelInteractiveButtons, PageHeader } from "@/components";
 import { TasksList } from "@/components/tasks";
 import { getLabelById } from "@/db/getLabelById";
+import { redirect } from "next/navigation";
+
+export const revalidate = 30
 
 const page = async ({ params }) => {
   const label = await getLabelById(params.id);
+
+  if (!label) return redirect("/todo");
 
   return (
     <>

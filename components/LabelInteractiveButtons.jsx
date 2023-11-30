@@ -48,7 +48,7 @@ const LabelInteractiveButtons = ({ label }) => {
         onSubmit={deleteLabel}
       />
 
-      <div className="min-w-full md:min-w-fit flex items-center justify-between gap-2">
+      <div className="md:min-w-fit flex items-center justify-end gap-2">
         <IconButton
           title="Edit Project"
           onClick={onEditLabelHandler}
