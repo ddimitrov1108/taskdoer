@@ -70,7 +70,7 @@ const PasswordField = ({
         </button>
 
         <input
-          autocomplete
+          autoComplete="on"
           ref={inputRef}
           disabled={disabled}
           type={isVisible && !disabled ? "text" : "password"}

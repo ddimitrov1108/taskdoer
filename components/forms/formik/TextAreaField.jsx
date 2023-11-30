@@ -18,7 +18,7 @@ const TextAreaField = ({
       )}
 
       <textarea
-        autocomplete
+        autoComplete="on"
         className={clsx(
           "bg-black-dark border outline-none px-4 py-2.5 rounded-lg w-full",
           className,
