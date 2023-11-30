@@ -1,5 +1,5 @@
 import { nextAuthConfig } from "@/lib/next-auth-config";
-import { getLabels, getProjects } from "@/server/db/user";
+import { getLabels, getProjects } from "@/db/user";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 

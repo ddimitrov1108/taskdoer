@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { nextAuthConfig } from "@/lib/next-auth-config";
-import { getLabels, getProjects } from "@/server/db/user";
+import { getLabels, getProjects } from "@/db/user";
 import {
   HeaderBarNavigation,
   SideBarNavigation,
@@ -19,7 +19,7 @@ const AppLayout = async ({ children }) => {
         <HeaderBarNavigation user={session.user} data={{ projects, labels }} />
         <SideBarNavigation user={session.user} data={{ projects, labels }} />
 
-        <div className="bg-primary-light/[0.05] w-full h-screen mt-16 lg:mt-0 lg:ml-96 overflow-auto styled-overflow py-8 px-4 xs:px-6 lg:px-8 xl:p-12">
+        <div className="bg-black-dark w-full mt-16 lg:mt-0 lg:ml-96 py-8 px-4 xs:px-6 lg:px-8 xl:p-12">
           <div>{children}</div>
         </div>
       </div>

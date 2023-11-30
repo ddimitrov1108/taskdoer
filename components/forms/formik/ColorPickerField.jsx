@@ -17,7 +17,7 @@ const ColorPickerField = ({
 
   return (
     <div className={clsx("mb-4", className, fullWidth ? "w-full" : "w-fit")}>
-      <Label label={label} sublabel={sublabel} />
+      <Label htmlFor={field.name} label={label} sublabel={sublabel} />
 
       <div className="w-full flex flex-wrap gap-2">
         {defaultColors.map((color) => (
@@ -31,7 +31,7 @@ const ColorPickerField = ({
             <div
               className={clsx(
                 "transition-all rounded-full",
-                color === field.value ? "bg-white p-2.5" : "bg-inherit p-0"
+                color === field.value ? "bg-black-main p-2.5" : "bg-inherit p-0"
               )}
             ></div>
           </button>

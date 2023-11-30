@@ -30,24 +30,23 @@ const LabelsNavList = ({ data = [], onSideBarClose = () => {} }) => {
         title="Labels"
         appendToTitle={
           <button
-            className="text-xl text-slate-400 hover:text-primary-main"
+            className="text-xl text-main hover:text-primary-main"
             onClick={onClickHandler}
           >
             <HiOutlinePlus />
           </button>
         }
         btnClassName="p-2 rounded-lg justify-between"
-        panelClassName="px-2 styled-overflow max-h-[260px] overflow-auto"
+        panelClassName="px-2 styled-overflow max-h-[260px] overflow-auto grid gap-1"
         open
       >
         {data.map(({ id, name }) => (
           <NavLink
             key={id}
-            href={`/me/labels/${id}`}
+            href={`/todo/labels/${id}`}
             name={name}
             onClick={onSideBarClose}
-            appendIcon={<div className="font-[500] text-primary-main">@</div>}
-            className="hover:bg-slate-50"
+            appendIcon={<div className="font-medium text-primary-main">@</div>}
           />
         ))}
       </DisclouseContainer>

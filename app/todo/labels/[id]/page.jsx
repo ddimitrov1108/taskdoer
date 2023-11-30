@@ -1,7 +1,7 @@
-import { getProjectById } from "@/server/db/getProjectById";
+import { getLabelById } from "@/db/getLabelById";
 
 const page = async ({ params }) => {
-  const data = await getProjectById(params.id);
+  const data = await getLabelById(params.id);
 
   return (
     <div>

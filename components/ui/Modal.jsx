@@ -1,7 +1,7 @@
 "use client";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { HiXMark } from "react-icons/hi2";
+import { MdClose } from "react-icons/md";
 import { IconButton } from ".";
 import clsx from "clsx";
 
@@ -35,7 +35,7 @@ const Modal = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/50" />
+          <div className="fixed inset-0 bg-black-dark/30 backdrop-blur-sm" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -51,7 +51,7 @@ const Modal = ({
             >
               <Dialog.Panel
                 className={clsx(
-                  "w-full p-4 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-lg",
+                  "bg-black-main w-full p-4 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-lg",
                   className
                 )}
               >
@@ -59,20 +59,18 @@ const Modal = ({
                   as="div"
                   className="flex items-center justify-between"
                 >
-                  <h1 className="text-base font-[500]">{title}</h1>
+                  <h1 className="text-base font-medium">{title}</h1>
                   {closeBtn && (
                     <IconButton
                       tabIndex={0}
                       onClick={onCloseClickHandler}
-                      className="outline-none text-xl text-slate-400 hover:text-gold-main transition-all"
+                      className="text-xl"
                     >
-                      <HiXMark />
+                      <MdClose />
                     </IconButton>
                   )}
                 </Dialog.Title>
-                <div className={clsx("mt-1", bodyClassName)}>
-                  {children}
-                </div>
+                <div className={clsx("mt-1", bodyClassName)}>{children}</div>
               </Dialog.Panel>
             </Transition.Child>
           </div>

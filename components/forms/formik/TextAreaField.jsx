@@ -4,6 +4,7 @@ import clsx from "clsx";
 
 const TextAreaField = ({
   label = "",
+  sublabel = "",
   fullWidth = false,
   className,
   field,
@@ -12,15 +13,18 @@ const TextAreaField = ({
 }) => {
   return (
     <div className={clsx("mb-4", fullWidth ? "w-full" : "w-fit")}>
-      {label && <Label label={label} />}
+      {label && (
+        <Label htmlFor={field.name} label={label} sublabel={sublabel} />
+      )}
 
       <textarea
+        autocomplete
         className={clsx(
-          "p-4 border w-full rounded-lg max-h-[300px] bg-white",
+          "bg-black-dark border outline-none px-4 py-2.5 rounded-lg w-full",
           className,
           errors[field.name] && touched[field.name]
-            ? " border-error-main focus:outline-error-main"
-            : "border-slate-200 focus:outline-primary-main"
+            ? "border-error-main"
+            : "border-black-light/40 focus:border-primary-main"
         )}
         {...field}
         {...restProps}

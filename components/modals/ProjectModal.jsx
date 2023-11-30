@@ -1,6 +1,6 @@
 import { Modal } from "../ui";
 import { ProjectForm } from "../forms";
-import { HiOutlineDocumentText, HiOutlinePencilSquare } from "react-icons/hi2";
+import { HiDocumentPlus, HiOutlinePencilSquare } from "react-icons/hi2";
 
 const ProjectModal = ({
   open,
@@ -13,8 +13,8 @@ const ProjectModal = ({
     <Modal
       title={
         <div className="flex items-center gap-2">
-          <div className="text-2xl text-slate-400">
-            {editMode ? <HiOutlinePencilSquare /> : <HiOutlineDocumentText />}
+          <div className="text-2xl text-main">
+            {editMode ? <HiOutlinePencilSquare /> : <HiDocumentPlus />}
           </div>
           {editMode ? "Edit Project" : "New Project"}
         </div>

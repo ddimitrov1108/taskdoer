@@ -15,22 +15,28 @@ const button = cva("button", {
       ],
       secondary: [
         "bg-primary-main/20",
-        "border-primary-main/20",
+        "border-border-gray-600/40",
         "text-primary-main",
       ],
       outlined: [
         "border-primary-main",
-        "bg-white",
-        "text-primary-main",
+        "bg-transparent",
+        "text-gray-300",
         "hover:bg-primary-main",
         "hover:text-white",
       ],
-      error: ["text-white", "bg-error-main"],
-      text: ["text-primary-main", "bg-white"],
+      error: [
+        "text-white",
+        "bg-error-main",
+        "border-error-main",
+        "hover:bg-error-dark",
+        "hover:border-error-dark",
+      ],
+      text: ["text-primary-main", "bg-inherit", "border-gray-600/40"],
       basic: [
         "bg-white",
-        "borderborder-slate-200 hover:border-slate-300-light/60",
-        "hover:borderborder-slate-200 hover:border-slate-300-light",
+        "borderborder-gray-200 hover:border-gray-300-light/60",
+        "hover:borderborder-gray-200 hover:border-gray-300-light",
       ],
     },
     size: {
@@ -60,7 +66,7 @@ export default function Button({
     <button
       type={type}
       className={clsx(
-        "text-sm font-[500] border transition-all duration-300 rounded-lg",
+        "text-sm font-medium border transition-all duration-300 rounded-lg",
         className,
         fullWidth ? "w-full" : "w-fit",
         button({ intent: variant, size })

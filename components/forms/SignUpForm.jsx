@@ -31,7 +31,7 @@ export default function SignUpForm() {
       redirect: false,
     }).then(({ error }) => {
       if (!error) {
-        router.replace("/me");
+        router.replace("/todo");
         return;
       }
 
@@ -110,11 +110,11 @@ export default function SignUpForm() {
           fullWidth
         />
 
-        <div className="w-full flex mt-1 space-x-2 text-sm text-gray-400">
+        <div className="w-full flex mt-1 space-x-2 text-sm text-main">
           <span>Already have an account?</span>
           <TextLink
             href="/sign-in"
-            className="font-[500]"
+            className="font-medium"
             size="small"
             title="Sign In"
             hoverEffect={false}

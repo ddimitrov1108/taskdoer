@@ -5,15 +5,16 @@ import { NavLink, ProjectsNavList, LabelsNavList } from ".";
 const NavigationList = ({ data, onSideBarClose = () => {} }) => {
   return (
     <>
-      <div>
+      <div className="grid gap-1">
         {navigationListLinks.uniqueTaskLinks.map(({ id, name, icon, href }) => (
           <NavLink
             key={id}
-            href={`/me/${href}`}
+            href={href}
             name={name}
             onClick={onSideBarClose}
             appendIcon={<div className="text-xl text-primary-main">{icon}</div>}
-            className="hover:bg-slate-50 hover:text-primary-main font-[500]"
+            className="font-medium"
+            count={1}
           />
         ))}
       </div>

@@ -56,29 +56,30 @@ const PasswordField = ({
 
   return (
     <div className={clsx("mb-4", fullWidth ? "w-full" : "w-fit")}>
-      <Label label={label} sublabel={sublabel} />
+      <Label htmlFor={field.name} label={label} sublabel={sublabel} />
 
       <div className="relative">
         <button
           tabIndex={-1}
           type="button"
           disabled={disabled}
-          className="hover:text-primary-main transition-all bg-transparent absolute top-2 right-2 px-1.5 py-1.5 text-xl textborder-slate-200 hover:border-slate-300-dark cursor-pointer rounded-lg select-none"
+          className="text-main transition-all bg-transparent absolute top-2 right-2 px-1.5 py-1.5 text-xl textborder-gray-200 hover:border-gray-300-dark cursor-pointer rounded-lg select-none"
           onClick={PasswordIconClickHandler}
         >
           {isVisible ? <HiOutlineEyeSlash /> : <HiOutlineEye />}
         </button>
 
         <input
+          autocomplete
           ref={inputRef}
           disabled={disabled}
           type={isVisible && !disabled ? "text" : "password"}
           className={clsx(
-            "px-4 py-2.5 border rounded-lg w-full",
+            "bg-black-dark border outline-none px-4 py-2.5 rounded-lg w-full",
             className,
             errors[field.name] && touched[field.name]
-              ? " border-error-main focus:outline-error-main"
-              : "border-slate-200 hover:border-slate-300 focus:outline-primary-main"
+              ? "border-error-main"
+              : "border-black-light/40 focus:border-primary-main"
           )}
           {...field}
           {...restProps}

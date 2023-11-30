@@ -30,20 +30,20 @@ const ProjectsNavList = ({ data = [], onSideBarClose = () => {} }) => {
         title="Projects"
         appendToTitle={
           <button
-            className="text-xl text-slate-400 hover:text-primary-main"
+            className="text-xl text-main hover:text-primary-main"
             onClick={onClickHandler}
           >
             <HiOutlinePlus />
           </button>
         }
         btnClassName="p-2 rounded-lg justify-between"
-        panelClassName="px-2 styled-overflow max-h-[260px] overflow-auto"
+        panelClassName="px-2 styled-overflow max-h-[260px] overflow-auto grid gap-1"
         open
       >
         {data.map(({ id, name, color }) => (
           <NavLink
             key={id}
-            href={`/me/projects/${id}`}
+            href={`/todo/projects/${id}`}
             name={name}
             onClick={onSideBarClose}
             appendIcon={
@@ -52,7 +52,7 @@ const ProjectsNavList = ({ data = [], onSideBarClose = () => {} }) => {
                 style={{ backgroundColor: color }}
               ></div>
             }
-            className="hover:bg-slate-50"
+            className=""
           />
         ))}
       </DisclouseContainer>

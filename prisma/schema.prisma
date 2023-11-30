@@ -46,16 +46,18 @@ model projects {
 }
 
 model tasks {
-  id          Int      @id @default(autoincrement())
-  name        String   @db.VarChar(40)
-  description String   @default("") @db.TinyText
-  completed   Boolean  @default(false)
-  important   Boolean  @default(false)
-  dueDate     DateTime @db.Date @default(now())
-  updated_at  DateTime @default(now()) @db.Timestamp(0)
-  created_at  DateTime @default(now()) @db.Timestamp(0)
-  projects    projects[]
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(40)
+  description String    @default("") @db.TinyText
+  completed   Boolean   @default(false)
+  important   Boolean   @default(false)
+  dueDate     DateTime  @db.Date @default(now())
+  updated_at  DateTime  @default(now()) @db.Timestamp(0)
+  created_at  DateTime  @default(now()) @db.Timestamp(0)
   labels      taskToLabel[]
+
+  project     projects  @relation(fields: [pid], references: [id])
+  pid         Int       @map("pid")
 }
 
 model taskToLabel {

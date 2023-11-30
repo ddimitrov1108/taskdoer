@@ -13,7 +13,7 @@ const TaskModal = ({
     <Modal
       title={
         <div className="flex items-center gap-2">
-          <div className="text-2xl text-slate-400">
+          <div className="text-2xl text-main">
             {editMode ? <HiOutlinePencilSquare /> : <HiOutlineDocumentText />}
           </div>
           {editMode ? "Edit Task" : "New Task"}

@@ -15,17 +15,18 @@ export default function TextField({
 }) {
   return (
     <div className={clsx("mb-4", fullWidth ? "w-full" : "w-fit")}>
-      <Label label={label} sublabel={sublabel} />
+      <Label htmlFor={field.name} label={label} sublabel={sublabel} />
 
       <input
+        autocomplete
         disabled={disabled}
         type={type || "text"}
         className={clsx(
-          "px-4 py-2.5 border rounded-lg w-full",
+          "bg-black-dark border outline-none px-4 py-2.5 rounded-lg w-full",
           className,
           errors[field.name] && touched[field.name]
-            ? " border-error-main focus:outline-error-main"
-            : "border-slate-200 hover:border-slate-300 focus:outline-primary-main"
+            ? "border-error-main"
+            : "border-black-light/40 focus:border-primary-main"
         )}
         {...field}
         {...restProps}

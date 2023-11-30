@@ -1,7 +1,20 @@
 "use client";
 import { Label, ErrorMessage } from ".";
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
 import clsx from "clsx";
+
+const tryFormatDate = (value) => {
+  try {
+    const parsedDate = parseISO(value);
+    if (isValid(parsedDate)) {
+      return format(parsedDate, "dd/MM/yyyy");
+    } else {
+      return "";
+    }
+  } catch (error) {
+    return "";
+  }
+};
 
 const DatePickerField = ({
   label = "",
@@ -13,30 +26,23 @@ const DatePickerField = ({
   form: { errors, touched },
   ...restProps
 }) => {
-  const onKeyDownHandler = (e) => {
-    if (e.key === "Tab") return;
-
-    e.preventDefault();
-  };
-
-  const formatedDate = format(new Date(field.value), "dd/MM/yyyy");
+  const formatedDate = tryFormatDate(field.value);
 
   return (
     <div className={clsx("mb-4 min-h-fit", fullWidth ? "w-full" : "w-fit")}>
-      <Label label={label} sublabel={sublabel} />
+      <Label htmlFor={field.name} label={label} sublabel={sublabel} />
 
       <input
         disabled={disabled}
         type="date"
         placeholder={formatedDate}
         className={clsx(
-          "px-4 py-2.5 border rounded-lg w-full",
+          "bg-black-dark border outline-none px-4 py-2.5 rounded-lg w-full",
           className,
           errors[field.name] && touched[field.name]
-            ? " border-error-main focus:outline-error-main"
-            : "border-slate-200 hover:border-slate-300 focus:outline-primary-main"
+            ? "border-error-main"
+            : "border-black-light/40 focus:border-primary-main"
         )}
-        onKeyDown={onKeyDownHandler}
         {...field}
         {...restProps}
       />

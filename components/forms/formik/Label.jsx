@@ -9,30 +9,18 @@ const Label = ({
 }) => {
   return (
     <div
-      className={clsx("text-gray-400 min-w-fit pb-2", className)}
+      className={clsx(
+        "text-[#C7C9D9] min-w-fit pb-2",
+        className,
+        !ignoreResponsiveStyle ? "text-sm md:text-base" : "text-base"
+      )}
       {...restProps}
     >
       {label && (
-        <label
-          className={clsx(
-            " min-w-fit font-[500]",
-            !ignoreResponsiveStyle ? "text-sm md:text-base" : "text-base"
-          )}
-        >
-          {label}
-        </label>
+        <label className={clsx(" min-w-fit")}>{label}</label>
       )}
 
-      {sublabel && (
-        <label
-          className={clsx(
-            "min-w-fit",
-            !ignoreResponsiveStyle ? "text-sm md:text-base" : "text-base"
-          )}
-        >
-          {sublabel}
-        </label>
-      )}
+      {sublabel && <label className="min-w-fit">{sublabel}</label>}
     </div>
   );
 };

@@ -3,6 +3,9 @@ import { Menu } from "@headlessui/react";
 import clsx from "clsx";
 import Link from "next/link";
 
+const defaultClassNames =
+  "transition-all w-full p-2 rounded-lg flex items-center gap-3";
+
 const DropdownListItem = ({
   as = "button",
   item,
@@ -10,9 +13,6 @@ const DropdownListItem = ({
   iconClassName,
   onClick = () => {},
 }) => {
-  const defaultClassNames =
-    "w-full p-2 hover:bg-slate-50 rounded-lg flex items-center gap-3";
-
   const itemBody = (
     <>
       <div className={clsx("text-xl", iconClassName)}>{item.icon}</div>

@@ -1,11 +1,11 @@
-import {
-  HiOutlineCheckCircle,
-  HiOutlineExclamationCircle,
-  HiOutlineExclamationTriangle,
-  HiOutlineInformationCircle,
-} from "react-icons/hi2";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
+import {
+  HiCheckCircle,
+  HiExclamationCircle,
+  HiExclamationTriangle,
+  HiInformationCircle,
+} from "react-icons/hi2";
 
 const alert = cva("div", {
   variants: {
@@ -23,10 +23,10 @@ const alert = cva("div", {
         "text-success-main",
       ],
       error: [
-        "bg-error-light/20",
-        "border-error-light/40",
-        "border-l-error-main",
-        "text-error-main",
+        "bg-transparent",
+        "border-error-light/20",
+        "border-l-red-500",
+        "text-red-500",
       ],
       warning: [
         "bg-warning-light/20",
@@ -45,20 +45,20 @@ const Alert = ({ variant = "info", children, ...restProps }) => {
   return (
     <div
       className={clsx(
-        "flex gap-2 mb-4 items-center px-4 py-2.5 border-l-4 rounded-lg font-semibold",
+        "flex gap-2 mb-4 items-center px-4 py-2.5 border border-l-4 rounded-lg font-semibold",
         alert({ intent: variant })
       )}
       {...restProps}
     >
       <div className="text-2xl">
         {variant === "info" ? (
-          <HiOutlineInformationCircle />
+          <HiInformationCircle />
         ) : variant === "success" ? (
-          <HiOutlineCheckCircle />
+          <HiCheckCircle />
         ) : variant === "error" ? (
-          <HiOutlineExclamationCircle />
+          <HiExclamationCircle />
         ) : (
-          <HiOutlineExclamationTriangle />
+          <HiExclamationTriangle />
         )}
       </div>
 

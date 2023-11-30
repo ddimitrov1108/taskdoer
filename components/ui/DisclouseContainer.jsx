@@ -24,9 +24,9 @@ const DisclouseContainer = ({
             <Disclosure.Button
               as="div"
               className={clsx(
-                "cursor-pointer group flex items-center font-semibold transition-all",
+                "text-main cursor-pointer group flex items-center font-medium transition-all",
                 boxHoverEffect
-                  ? "hover:bg-slate-50"
+                  ? "hover:text-white"
                   : "hover:text-primary-main",
                 btnClassName
               )}
@@ -34,7 +34,7 @@ const DisclouseContainer = ({
               <div className="flex items-center gap-3">
                 <div
                   className={clsx(
-                    "transition-all text-slate-400 text-xl",
+                    "z-0 transition-all text-main text-xl",
                     open && "rotate-180"
                   )}
                 >

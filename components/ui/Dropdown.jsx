@@ -27,7 +27,7 @@ const Dropdown = ({
             {chevronDown && (
               <div
                 className={clsx(
-                  "text-xl text-slate-400 transition-all",
+                  "text-xl text-main transition-all",
                   open && "rotate-180",
                   chevronClassName
                 )}
@@ -50,7 +50,7 @@ const Dropdown = ({
       >
         <Menu.Items
           className={clsx(
-            "overflow-hidden z-40 absolute right-0 mt-2 w-56 origin-top-right border border-slate-200 rounded-lg bg-white shadow-xl focus:outline-none outline-none select-none",
+            "overflow-hidden z-40 absolute right-0 mt-2 w-56 origin-top-right rounded-lg shadow-xl focus:outline-none outline-none select-none",
             menuItemsClassName
           )}
         >

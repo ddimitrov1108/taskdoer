@@ -25,7 +25,7 @@ const TextLink = ({
         "w-fit",
         link({ size }),
         hoverEffect
-          ? "text-gray-400 transition-all hover:text-primary-main"
+          ? "text-main transition-all hover:text-primary-main"
           : "text-primary-main",
         className
       )}

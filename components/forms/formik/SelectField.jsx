@@ -19,7 +19,7 @@ const SelectField = ({
 
   return (
     <div className={clsx("mb-4", fullWidth ? "w-full" : "w-fit")}>
-      <Label label={label} sublabel={sublabel} />
+      <Label htmlFor={field.name} label={label} sublabel={sublabel} />
 
       <Listbox value={field.value} onChange={onChangeHandler} className="">
         {({ open }) => (
@@ -35,14 +35,14 @@ const SelectField = ({
                   "border outline-none -outline-offset-1 relative rounded-lg w-full flex items-center text-left cursor-pointer px-4 py-2.5",
                   errors[field.name] && touched[field.name]
                     ? " border-error-main focus:outline-error-main"
-                    : "border-slate-200 hover:bg-slate-50 focus:outline-primary-main",
+                    : "border-gray-200 hover:bg-gray-50 focus:outline-primary-main",
                   open && " outline-primary-main"
                 )}
               >
                 <span className="grow">{field.value}</span>
                 <HiChevronDown
                   className={clsx(
-                    "absolute top-3.5 right-3 transition-all min-w-fit text-lg text-slate-500",
+                    "absolute top-3.5 right-3 transition-all min-w-fit text-lg text-main",
                     open && "rotate-180"
                   )}
                 />
@@ -54,8 +54,8 @@ const SelectField = ({
                     key={option}
                     className={({ active }) =>
                       clsx(
-                        "px-4 py-2.5 cursor-pointer hover:bg-slate-50",
-                        active && "bg-slate-100"
+                        "px-4 py-2.5 cursor-pointer hover:bg-gray-50",
+                        active && "bg-gray-100"
                       )
                     }
                     value={option}

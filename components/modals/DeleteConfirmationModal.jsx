@@ -16,7 +16,7 @@ const DeleteConfirmationModal = ({ text, open, setOpen, onSubmit }) => {
     <Modal
       title={
         <div className="flex items-center gap-2">
-          <div className="text-2xl text-slate-400">
+          <div className="text-2xl text-main">
             <HiOutlineExclamationTriangle />
           </div>
           Delete Confirmation

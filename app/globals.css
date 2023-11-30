@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 body {
-  background-color: white;
-  color: #2d2e32
+  background-color: #242434;
+  color: #C7C9D9;
 }
 
 html {
@@ -16,12 +16,12 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 body::-webkit-scrollbar-thumb {
   border-radius: 6px;
-  background-color: #e2e8f0;
+  background-color: #28293D;
 }
 
 
@@ -30,12 +30,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 .styled-overflow::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 .styled-overflow::-webkit-scrollbar-thumb {
   border-radius: 6px;
-  background-color: #e2e8f0;
+  background-color: #28293D;
 }
 
 .styled-overflow-horizontal::-webkit-scrollbar-track {
@@ -43,14 +43,14 @@ body::-webkit-scrollbar-thumb {
 }
 
 .styled-overflow-horizontal::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
   height: 4px;
 }
 
 .styled-overflow-horizontal::-webkit-scrollbar-thumb {
   border-radius: 6px;
   height: 4px;
-  background-color: #e2e8f0;
+  background-color: #28293D;
 }
 
 .color-picker {
@@ -93,4 +93,8 @@ body::-webkit-scrollbar-thumb {
 
 .color-picker-input:checked>.color-picker-input::after {
   background-color: red;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
 }

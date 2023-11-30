@@ -4,21 +4,22 @@ import { enqueueSnackbar } from "notistack";
 import { useForm } from "../hooks";
 import { Alert, Button } from "../ui";
 import {
-  ChipSelectField,
+  LabelsSelectField,
   DatePickerField,
   TextAreaField,
   TextField,
+  CheckBoxField,
 } from "./formik";
 import { taskSchema } from "@/lib/yup-schemas";
 import { format } from "date-fns";
-import useSWR from "swr";
-import { fetcher } from "@/lib/swr-fetcher";
+import { useParams, useRouter } from "next/navigation";
 
 const initialValues = {
   name: "",
   description: "",
   dueDate: format(new Date(), "yyyy-MM-dd"),
-  taskLabels: [],
+  labels: [],
+  important: false,
 };
 
 const TaskForm = ({
@@ -26,23 +27,39 @@ const TaskForm = ({
   editMode = false,
   afterFormSubmit = () => {},
 }) => {
-  const { data, isLoading } = useSWR("/api/labels", fetcher);
+  const params = useParams();
+  const router = useRouter();
   const [form, setForm] = useForm();
 
   const onSubmitHandler = async (values) => {
     setForm({ loading: true, error: "" });
-    const { name, description, dueDate, taskLabels } = values;
 
     if (editMode) {
       console.log(`editMode`);
       console.log(values);
     } else {
-      console.log(`newTask`);
-      console.log(values);
+      await fetch(`/api/tasks`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...values,
+          pid: params.id,
+          dueDate: new Date(values.dueDate),
+        }),
+      })
+        .then(() => {
+          enqueueSnackbar("Task created successfully", { variant: "success" });
+          setForm({ loading: false, error: "" });
+          router.refresh();
+        })
+        .catch((err) => {
+          setForm({ ...form, error: err });
+          console.log(err);
+        });
     }
 
     setForm({ loading: false, error: "" });
-    // mutate("/api/labels");
+    router.refresh();
     afterFormSubmit();
   };
 
@@ -65,7 +82,7 @@ const TaskForm = ({
         <Field
           id="name"
           name="name"
-          label="Enter name"
+          label="Name"
           placeholder="My Task Name"
           disabled={form.loading}
           maxLength={40}
@@ -83,23 +100,33 @@ const TaskForm = ({
         />
 
         <Field
-          id="taskLabels"
-          name="taskLabels"
-          label="Task Labels"
+          id="labels"
+          name="labels"
+          label="Labels"
           disabled={form.loading}
-          component={ChipSelectField}
-          options={data}
+          component={LabelsSelectField}
           fullWidth
         />
 
         <Field
           id="description"
           name="description"
-          label="Enter task description"
+          label="Description"
           placeholder="Walk the doggo"
           disabled={form.loading}
           maxLength={255}
           component={TextAreaField}
+          fullWidth
+        />
+
+        <Field
+          id="important"
+          name="important"
+          label="Important"
+          type="checkbox"
+          disabled={form.loading}
+          maxLength={4}
+          component={CheckBoxField}
           fullWidth
         />
 
@@ -122,7 +149,7 @@ const TaskForm = ({
             loading={form.loading}
             fullWidth
           >
-            Edit Task
+            {editMode ? "Edit Таск" : "Create Таск"}
           </Button>
         </div>
       </Form>

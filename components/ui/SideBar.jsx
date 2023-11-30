@@ -30,7 +30,7 @@ const SideBar = ({
       ></div>
       <div
         className={clsx(
-          "z-50 fixed top-0 w-full sm:w-1/2 h-full transition-all ease-in-out duration-300 bg-white",
+          "z-50 fixed top-0 w-full sm:w-1/2 h-full transition-all ease-in-out duration-300",
           showFrom === "right" && "right-0",
           showFrom === "right"
             ? open
@@ -55,7 +55,7 @@ const SideBar = ({
                 tabIndex={0}
                 aria-label="Close Menu"
                 onClick={onClose}
-                className="text-slate-400 text-xl"
+                className="text-main text-xl"
               >
                 <HiXMark />
               </IconButton>
