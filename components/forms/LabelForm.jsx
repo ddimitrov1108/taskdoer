@@ -21,11 +21,13 @@ const LabelForm = ({
   const onSubmitHandler = async (values) => {
     setForm({ loading: true, error: "" });
     const { name } = values;
+    const { signal } = new AbortController();
 
     if (editMode) {
       await fetch(`/api/labels/${params.id}`, {
         method: "PUT",
         body: JSON.stringify({ name }),
+        signal,
       })
         .then(() => {
           enqueueSnackbar("Label edited successfully", { variant: "success" });
@@ -39,6 +41,7 @@ const LabelForm = ({
       await fetch("/api/labels", {
         method: "POST",
         body: JSON.stringify({ name }),
+        signal
       })
         .then(() => {
           enqueueSnackbar("Label created successfully", { variant: "success" });

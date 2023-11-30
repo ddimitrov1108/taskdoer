@@ -33,6 +33,7 @@ const TaskForm = ({
 
   const onSubmitHandler = async (values) => {
     setForm({ loading: true, error: "" });
+    const { signal } = new AbortController();
 
     if (editMode) {
       console.log(`editMode`);
@@ -46,6 +47,7 @@ const TaskForm = ({
           pid: params.id,
           dueDate: new Date(values.dueDate),
         }),
+        signal
       })
         .then(() => {
           enqueueSnackbar("Task created successfully", { variant: "success" });

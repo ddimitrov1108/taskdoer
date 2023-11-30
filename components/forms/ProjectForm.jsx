@@ -21,6 +21,7 @@ const ProjectForm = ({
   const onSubmitHandler = async (values) => {
     setForm({ loading: true, error: "" });
     const { name, color } = values;
+    const { signal } = new AbortController();
 
     if (editMode) {
       await fetch(`/api/projects/${params.id}`, {
@@ -29,6 +30,7 @@ const ProjectForm = ({
           name,
           color,
         }),
+        signal
       })
         .then(() => {
           enqueueSnackbar("Project edited successfully", {
@@ -47,6 +49,7 @@ const ProjectForm = ({
           name,
           color,
         }),
+        signal
       })
         .then((response) => response.json())
         .then((data) => {
