@@ -45,7 +45,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-###Future to be added:
+### Future to be added:
 
 - [x] Create tasks without project bind
 - [x] Add a "past schedule" section to task list
