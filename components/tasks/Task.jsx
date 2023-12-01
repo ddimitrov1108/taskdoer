@@ -2,7 +2,6 @@ import {
   HiCheck,
   HiDocumentText,
   HiOutlineEllipsisVertical,
-  HiOutlinePencilSquare,
   HiOutlineSquares2X2,
   HiOutlineStar,
   HiOutlineTrash,
@@ -12,6 +11,8 @@ import Link from "next/link";
 import { Chip, Dropdown, DropdownListItem } from "../ui";
 import { format, isPast, isToday, isTomorrow } from "date-fns";
 import { enUS } from "date-fns/locale";
+import { TaskContext } from "../providers/TaskProvider";
+import { useContext } from "react";
 import clsx from "clsx";
 
 const Task = ({
@@ -19,23 +20,16 @@ const Task = ({
   onCompletedHandler = () => {},
   onImportantHandler = () => {},
 }) => {
-  // const taskContext = useContext(TaskContext);
+  const taskContext = useContext(TaskContext);
 
   const onTaskClickHandler = () => {
-    alert("click task");
-    // taskContext.setShowTask(task);
-  };
-
-  const onTaskEditHandler = () => {
-    alert("edit task");
-    // taskContext.setSelectedTask(task);
-    // taskContext.setTaskModal({ open: true, editMode: true });
+    taskContext.setSelectedTask(task);
+    taskContext.setOpenDetailsTaskModal(true);
   };
 
   const onTaskDeleteHandler = () => {
-    alert("delete task");
-    // taskContext.setSelectedTask(task);
-    // taskContext.setDeleteModalOpen(true);
+    taskContext.setSelectedTask(task);
+    taskContext.setOpenDeleteTaskModal(true);
   };
 
   const taskInteractions = [
@@ -43,13 +37,6 @@ const Task = ({
       name: "Details",
       icon: <HiOutlineSquares2X2 />,
       onClick: onTaskClickHandler,
-      className: "text-light hover:text-white",
-      iconClassName: "text-primary-main",
-    },
-    {
-      name: "Edit",
-      icon: <HiOutlinePencilSquare />,
-      onClick: onTaskEditHandler,
       className: "text-light hover:text-white",
       iconClassName: "text-primary-main",
     },

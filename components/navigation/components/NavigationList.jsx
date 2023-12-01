@@ -14,7 +14,6 @@ const NavigationList = ({ data, onSideBarClose = () => {} }) => {
             onClick={onSideBarClose}
             appendIcon={<div className="text-xl text-primary-main">{icon}</div>}
             className="font-medium"
-            count={1}
           />
         ))}
       </div>

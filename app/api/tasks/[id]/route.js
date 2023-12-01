@@ -10,6 +10,7 @@ const getTaskById = async (id) => {
       id,
     },
     include: {
+      labels: true,
       project: true,
     },
   });
@@ -39,6 +40,30 @@ export async function PUT(req, { params }) {
       data,
     });
 
+    if (data.labels) {
+      task.labels.forEach(async (l) => {
+        if (data.labels.find((o) => o.id === l.id)) return;
+
+        await prisma.taskToLabel.delete({
+          data: {
+            taskId: task.id,
+            labelId: l.id,
+          },
+        });
+      });
+
+      data.labels.forEach(async (l) => {
+        if (task.labels.find((o) => o.id === l.id)) return;
+
+        await prisma.taskToLabel.create({
+          data: {
+            taskId: task.id,
+            labelId: l.id,
+          },
+        });
+      });
+    }
+
     return NextResponse.json({}, { status: 200 });
   } catch (err) {
     console.log(err);
@@ -56,16 +81,23 @@ export async function DELETE(req, { params }) {
   try {
     const task = await getTaskById(id);
 
-    if (!task) return NextResponse.json({}, { status: 404 });
+    if (task) {
+      if (task.project.uid === session.user.id) {
+        if (task.labels.length) {
+          await prisma.taskToLabel.deleteMany({
+            where: {
+              id: task.labels[0].id,
+            },
+          });
+        }
 
-    if (task.projects.uid != session.user.id)
-      return NextResponse.json({}, { status: 403 });
-
-    await prisma.tasks.delete({
-      where: {
-        id,
-      },
-    });
+        await prisma.tasks.delete({
+          where: {
+            id: task.id,
+          },
+        });
+      }
+    }
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {

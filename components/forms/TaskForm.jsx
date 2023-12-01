@@ -36,8 +36,25 @@ const TaskForm = ({
     const { signal } = new AbortController();
 
     if (editMode) {
-      console.log(`editMode`);
-      console.log(values);
+      await fetch(`/api/tasks`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...values,
+          pid: params.id,
+          dueDate: new Date(values.dueDate),
+        }),
+        signal
+      })
+        .then(() => {
+          enqueueSnackbar("Task created successfully", { variant: "success" });
+          setForm({ loading: false, error: "" });
+          router.refresh();
+        })
+        .catch((err) => {
+          setForm({ ...form, error: err });
+          console.log(err);
+        });
     } else {
       await fetch(`/api/tasks`, {
         method: "POST",

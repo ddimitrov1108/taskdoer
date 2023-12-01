@@ -46,20 +46,17 @@ export async function DELETE(req, { params }) {
     });
 
     if (label) {
-      await prisma.$transaction([
-        ...label.tasks.map((t) =>
-          prisma.taskToLabel.deleteMany({
-            where: {
-              labelId: t.labelId,
-            },
-          })
-        ),
-        prisma.labels.delete({
-          where: {
-            id: label.id,
-          },
-        }),
-      ]);
+      await prisma.taskToLabel.deleteMany({
+        where: {
+          labelId: label.id,
+        },
+      });
+
+      await prisma.labels.delete({
+        where: {
+          id: label.id,
+        },
+      });
     }
 
     return NextResponse.json({}, { status: 200 });
