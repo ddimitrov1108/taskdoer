@@ -32,23 +32,16 @@ export async function PUT(req, { params }) {
     if (task.project.uid != session.user.id)
       return NextResponse.json({}, { status: 403 });
 
-      const { name, description, dueDate, labels, important } = data;
-
     await prisma.tasks.update({
       where: {
         id,
       },
-      data: {
-        name,
-        description,
-        dueDate,
-        important,
-      }
+      data,
     });
 
-    if (labels.length) {
+    if (data.labels.length) {
       task.labels.forEach(async (l) => {
-        if (labels.find((o) => o.id === l.id)) return;
+        if (data.labels.find((o) => o.id === l.id)) return;
 
         await prisma.taskToLabel.delete({
           data: {
@@ -58,7 +51,7 @@ export async function PUT(req, { params }) {
         });
       });
 
-      labels.forEach(async (l) => {
+      data.labels.forEach(async (l) => {
         if (task.labels.find((o) => o.id === l.id)) return;
 
         await prisma.taskToLabel.create({
