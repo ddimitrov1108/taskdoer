@@ -7,7 +7,11 @@ First, run the development server:
 ```bash
 npm install
 
-create and configurate the.env file
+create and configurate .env file
+NEXTAUTH_SECRET=
+HASH_SALT=
+DATABASE_URL=
+BASE_URL=http://localhost:3000
 
 npx prisma migrate dev
 
