@@ -1,25 +1,11 @@
 import { PageHeader } from "@/components";
 import { TasksList } from "@/components/tasks";
-import { nextAuthConfig } from "@/lib/next-auth-config";
-import { prisma } from "@/lib/prisma";
-import { getServerSession } from "next-auth";
+import { getImportantTasks } from "@/db";
 
 export const revalidate = 30;
 
 const ImportantPage = async () => {
-  const session = await getServerSession(nextAuthConfig);
-
-  const tasks = await prisma.tasks.findMany({
-    where: {
-      important: true,
-      project: {
-        uid: session.user.id,
-      },
-    },
-    include: {
-      labels: true,
-    }
-  });
+  const tasks = await getImportantTasks();
 
   return (
     <>

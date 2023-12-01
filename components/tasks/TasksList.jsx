@@ -57,8 +57,8 @@ const TasksList = ({ tasks = [] }) => {
   const activeTasks = sortByDate(
     tasks.filter(
       (e) =>
-        !e.completed &&
         !e.important &&
+        !e.completed &&
         (isToday(e.dueDate) || isFuture(e.dueDate))
     )
   );

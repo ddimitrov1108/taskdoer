@@ -99,7 +99,7 @@ export async function DELETE(req, { params }) {
   const taskId = parseInt(params.id);
 
   try {
-    const task = await prisma.tasks.findUnique({
+    const task = await prisma.tasks.findFirst({
       where: {
         id: taskId,
         uid: session.user.id,
@@ -112,21 +112,19 @@ export async function DELETE(req, { params }) {
 
     if (!task) return NextResponse.json({}, { status: 404 });
 
-    if (task.project.uid === session.user.id) {
-      if (task.labels.length) {
-        await prisma.taskToLabel.deleteMany({
-          where: {
-            taskId: task.id,
-          },
-        });
-      }
-
-      await prisma.tasks.delete({
+    if (task.labels.length) {
+      await prisma.taskToLabel.deleteMany({
         where: {
-          id: task.id,
+          taskId: task.id,
         },
       });
     }
+
+    await prisma.tasks.delete({
+      where: {
+        id: task.id,
+      },
+    });
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {

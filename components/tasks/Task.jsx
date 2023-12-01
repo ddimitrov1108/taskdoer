@@ -35,7 +35,7 @@ const Task = ({ task }) => {
       name: "Details",
       icon: <HiOutlineSquares2X2 />,
       onClick: onTaskClickHandler,
-      className: "text-light hover:text-white",
+      className: "text-light hover:text-light",
       iconClassName: "text-primary-main",
     },
     {
@@ -77,7 +77,7 @@ const Task = ({ task }) => {
                 "transition-all font-[500] w-full max-w-[400px] truncate ...",
                 task.completed
                   ? "line-through text-main"
-                  : "text-light group-hover:text-white"
+                  : "text-light group-hover:text-light"
               )}
             >
               {task.name}
@@ -113,7 +113,7 @@ const Task = ({ task }) => {
                 "transition-all p-1 text-xl hover:bg-transparent",
                 task.important
                   ? "text-warning-main"
-                  : "text-slate-500 hover:text-white"
+                  : "text-main hover:text-light"
               )}
               onClick={(e) => {
                 e.stopPropagation();
@@ -124,7 +124,7 @@ const Task = ({ task }) => {
             </button>
 
             <Dropdown
-              btnClassName="transition-all text-2xl text-main w-full p-1 hover:text-white rounded-md flex items-center gap-3"
+              btnClassName="transition-all text-2xl text-main w-full p-1 hover:text-light rounded-md flex items-center gap-3"
               btn={<HiOutlineEllipsisVertical />}
               menuItemsClassName="border border-black-light/40 bg-black-main p-2"
               chevronClassName="pr-0.5"

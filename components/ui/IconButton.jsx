@@ -12,7 +12,7 @@ const IconButton = ({
     <button
       type={type}
       className={clsx(
-        "text-main hover:text-light hover:bg-black-light/10 outline-none grid items-center justify-center p-1.5 transition-all rounded-full",
+        "text-main hover:text-white hover:bg-black-light/10 outline-none grid items-center justify-center p-1.5 transition-all rounded-full",
         className
       )}
       {...restProps}
