@@ -36,18 +36,17 @@ const TaskForm = ({
     const { signal } = new AbortController();
 
     if (editMode) {
-      await fetch(`/api/tasks`, {
-        method: "POST",
+      await fetch(`/api/tasks/${initialState.id}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...values,
-          pid: params.id,
           dueDate: new Date(values.dueDate),
         }),
-        signal
+        signal,
       })
         .then(() => {
-          enqueueSnackbar("Task created successfully", { variant: "success" });
+          enqueueSnackbar("Task edited successfully", { variant: "success" });
           setForm({ loading: false, error: "" });
           router.refresh();
         })
@@ -64,7 +63,7 @@ const TaskForm = ({
           pid: params.id,
           dueDate: new Date(values.dueDate),
         }),
-        signal
+        signal,
       })
         .then(() => {
           enqueueSnackbar("Task created successfully", { variant: "success" });

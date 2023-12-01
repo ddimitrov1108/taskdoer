@@ -26,23 +26,29 @@ export async function PUT(req, { params }) {
 
   try {
     const task = await getTaskById(id);
-    console.log(task);
 
     if (!task) return NextResponse.json({}, { status: 404 });
 
     if (task.project.uid != session.user.id)
       return NextResponse.json({}, { status: 403 });
 
+      const { name, description, dueDate, labels, important } = data;
+
     await prisma.tasks.update({
       where: {
         id,
       },
-      data,
+      data: {
+        name,
+        description,
+        dueDate,
+        important,
+      }
     });
 
-    if (data.labels) {
+    if (labels.length) {
       task.labels.forEach(async (l) => {
-        if (data.labels.find((o) => o.id === l.id)) return;
+        if (labels.find((o) => o.id === l.id)) return;
 
         await prisma.taskToLabel.delete({
           data: {
@@ -52,7 +58,7 @@ export async function PUT(req, { params }) {
         });
       });
 
-      data.labels.forEach(async (l) => {
+      labels.forEach(async (l) => {
         if (task.labels.find((o) => o.id === l.id)) return;
 
         await prisma.taskToLabel.create({
@@ -61,6 +67,12 @@ export async function PUT(req, { params }) {
             labelId: l.id,
           },
         });
+      });
+    } else {
+      await prisma.taskToLabel.deleteMany({
+        where: {
+          taskId: task.id,
+        },
       });
     }
 
