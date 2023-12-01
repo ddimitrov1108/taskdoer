@@ -10,24 +10,24 @@ import { v4 as uuidv4 } from "uuid";
 
 export const navigationListLinks = {
   userDropdown: [
-    {
-      id: uuidv4(),
-      name: "Details",
-      icon: <HiOutlineDocumentText />,
-      href: "/account",
-    },
-    {
-      id: uuidv4(),
-      name: "Settings",
-      icon: <HiOutlineCog6Tooth />,
-      href: "/account/settings",
-    },
-    {
-      id: uuidv4(),
-      name: "Privacy",
-      icon: <HiOutlineShieldExclamation />,
-      href: "/account/privacy",
-    },
+    // {
+    //   id: uuidv4(),
+    //   name: "Details",
+    //   icon: <HiOutlineDocumentText />,
+    //   href: "/account",
+    // },
+    // {
+    //   id: uuidv4(),
+    //   name: "Settings",
+    //   icon: <HiOutlineCog6Tooth />,
+    //   href: "/account/settings",
+    // },
+    // {
+    //   id: uuidv4(),
+    //   name: "Privacy",
+    //   icon: <HiOutlineShieldExclamation />,
+    //   href: "/account/privacy",
+    // },
   ],
   uniqueTaskLinks: [
     { id: uuidv4(), name: "My Day", icon: <HiOutlineSun />, href: "/todo" },
