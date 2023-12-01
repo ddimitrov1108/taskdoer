@@ -23,7 +23,7 @@ const ImportantPage = async () => {
 
   return (
     <>
-      <div className="mb-10 grid gap-4 md:flex md:items-end md:justify-between">
+      <div className="mb-8 grid gap-4 md:flex md:items-end md:justify-between">
         <PageHeader
           type="daily"
           title={

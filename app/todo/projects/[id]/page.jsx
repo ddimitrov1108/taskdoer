@@ -1,20 +1,19 @@
 import { PageHeader } from "@/components";
 import { ProjectInteractiveButtons } from "@/components/interactive-buttons";
 import { TasksList } from "@/components/tasks";
-import { getProjectById } from "@/db/getProjectById";
-import { redirect } from "next/navigation";
+import { getProjectById } from "@/db";
+import { notFound } from "next/navigation";
 
-export const revalidate = 30
+export const revalidate = 30;
 
 const page = async ({ params }) => {
   const project = await getProjectById(params.id);
 
-  if(!project)
-  return redirect("/todo");
+  if (!project) return notFound();
 
   return (
     <>
-      <div className="mb-10 grid gap-4 md:flex md:items-end md:justify-between">
+      <div className="mb-8 grid gap-4 md:flex md:items-end md:justify-between">
         <PageHeader
           type="project"
           title={

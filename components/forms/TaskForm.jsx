@@ -12,7 +12,7 @@ import {
 } from "./formik";
 import { taskSchema } from "@/lib/yup-schemas";
 import { format } from "date-fns";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 const initialValues = {
   name: "",
@@ -28,7 +28,6 @@ const TaskForm = ({
   afterFormSubmit = () => {},
 }) => {
   const params = useParams();
-  const pathname = usePathname();
   const router = useRouter();
   const [form, setForm] = useForm();
 

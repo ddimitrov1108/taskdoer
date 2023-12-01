@@ -28,7 +28,7 @@ const TasksList = ({ tasks = [] }) => {
           <p className="text-center text-main">
             No tasks to be shown here! You either completed all of the tasks 🎉,
             <br />
-            or havent added any tasks to this section.
+            or you havent added any tasks to this section.
           </p>
 
           <AddTaskButton
@@ -46,7 +46,12 @@ const TasksList = ({ tasks = [] }) => {
   );
 
   const importantTasks = sortByDate(
-    tasks.filter((e) => e.important && !e.completed && !isPast(e.dueDate))
+    tasks.filter(
+      (e) =>
+        e.important &&
+        !e.completed &&
+        (isToday(e.dueDate) || isFuture(e.dueDate))
+    )
   );
 
   const activeTasks = sortByDate(

@@ -1,17 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { DeleteConfirmationModal, ProjectModal, TaskModal } from "../modals";
+import { DeleteConfirmationModal, ProjectModal } from "../modals";
 import { IconButton } from "../ui";
 import { HiOutlinePencilSquare, HiOutlineTrash } from "react-icons/hi2";
 import { enqueueSnackbar } from "notistack";
 import { AddTaskButton } from "../tasks";
+import { TaskContext } from "../providers/TaskProvider";
 
 const ProjectInteractiveButtons = ({ project }) => {
+  const taskContext = useContext(TaskContext);
   const params = useParams();
   const router = useRouter();
-  const [openNewTaskModal, setOpenNewTaskModal] = useState(false);
   const [openEditProjectModal, setOpenEditProjectModal] = useState(false);
   const [openDeleteProjectModal, setOpenDeleteProjectModal] = useState(false);
 
@@ -36,12 +37,6 @@ const ProjectInteractiveButtons = ({ project }) => {
 
   return (
     <>
-      <TaskModal
-        open={openNewTaskModal}
-        setOpen={setOpenNewTaskModal}
-        afterFormSubmit={() => setOpenNewTaskModal(false)}
-      />
-
       <ProjectModal
         initialState={project}
         editMode={true}
@@ -58,7 +53,7 @@ const ProjectInteractiveButtons = ({ project }) => {
       />
 
       <div className="min-w-full md:min-w-fit flex items-center justify-between gap-2">
-        <AddTaskButton onClick={() => setOpenNewTaskModal(true)} />
+        <AddTaskButton onClick={() => taskContext.setOpenNewTaskModal(true)} />
 
         <div className="flex items-center gap-2">
           <IconButton

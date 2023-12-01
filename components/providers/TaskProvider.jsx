@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { DeleteConfirmationModal, TaskModal } from "../modals";
 import { enqueueSnackbar } from "notistack";
 import { useSound } from "../hooks";

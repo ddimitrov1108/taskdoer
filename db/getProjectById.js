@@ -2,15 +2,16 @@ import { nextAuthConfig } from "@/lib/next-auth-config";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 
-export const getProjectById = async (id) => {
+const getProjectById = async (id) => {
   if (!id) return null;
 
   const session = await getServerSession(nextAuthConfig);
+  const projectId = parseInt(id);
 
   try {
     const project = await prisma.projects.findFirst({
       where: {
-        id: parseInt(id),
+        id: projectId,
         uid: session.user.id,
       },
       select: {
@@ -40,11 +41,13 @@ export const getProjectById = async (id) => {
       },
     });
 
+    if (!project?.tasks.length) return project;
+
     return {
       ...project,
-      tasks: project.tasks.map((t) => ({
-        ...t,
-        labels: t.labels.map((l) => ({ id: l.label.id, name: l.label.name })),
+      tasks: project.tasks.map(({ labels, ...restTask }) => ({
+        ...restTask,
+        labels: labels.map(({ label }) => ({ ...label })),
       })),
     };
   } catch (err) {
@@ -52,3 +55,5 @@ export const getProjectById = async (id) => {
     return null;
   }
 };
+
+export default getProjectById;

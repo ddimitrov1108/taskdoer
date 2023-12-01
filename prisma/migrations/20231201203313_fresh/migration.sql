@@ -47,8 +47,10 @@ CREATE TABLE `tasks` (
     `dueDate` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `uid` INTEGER NULL,
     `pid` INTEGER NULL,
 
+    INDEX `uid`(`uid`),
     INDEX `pid`(`pid`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -70,6 +72,9 @@ ALTER TABLE `labels` ADD CONSTRAINT `labels_ibfk_1` FOREIGN KEY (`uid`) REFERENC
 
 -- AddForeignKey
 ALTER TABLE `projects` ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+-- AddForeignKey
+ALTER TABLE `tasks` ADD CONSTRAINT `tasks_uid_fkey` FOREIGN KEY (`uid`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `tasks` ADD CONSTRAINT `tasks_pid_fkey` FOREIGN KEY (`pid`) REFERENCES `projects`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

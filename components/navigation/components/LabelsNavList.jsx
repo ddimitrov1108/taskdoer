@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { DisclouseContainer } from "../../ui";
-import { HiOutlineFolderPlus } from "react-icons/hi2";
+import { HiPlus } from "react-icons/hi2";
 import { NavLink } from ".";
 import { LabelModal } from "../../modals";
 
@@ -33,7 +33,7 @@ const LabelsNavList = ({ data = [], onSideBarClose = () => {} }) => {
             className="text-xl text-main hover:text-primary-main"
             onClick={onClickHandler}
           >
-            <HiOutlineFolderPlus />
+            <HiPlus />
           </button>
         }
         btnClassName="p-2 rounded-lg justify-between"

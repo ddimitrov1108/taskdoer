@@ -6,28 +6,28 @@ import { validateIdParam } from "../api-utils";
 
 export async function POST(req) {
   const data = await req.json();
-
-  if (!validateIdParam(data?.pid))
-    return NextResponse.json({}, { status: 400 });
-
   const session = await getServerSession(nextAuthConfig);
-  const id = parseInt(data.pid);
+  const projectId = parseInt(data.pid);
+  const userId = session.user.id;
 
   try {
-    const projectBind = await prisma.projects.findFirst({
-      where: {
-        id,
-        uid: session.user.id,
-      },
-    });
+    if (projectId) {
+      const projectBind = await prisma.projects.findFirst({
+        where: {
+          id: projectId,
+          uid: userId,
+        },
+      });
 
-    if (!projectBind) return NextResponse.json({}, { status: 403 });
+      if (!projectBind) return NextResponse.json({}, { status: 403 });
+    }
 
     const { name, description, dueDate, labels, important } = data;
 
     const newTask = await prisma.tasks.create({
       data: {
-        pid: id,
+        pid: projectId,
+        uid: userId,
         name,
         description,
         dueDate,
@@ -37,14 +37,16 @@ export async function POST(req) {
     });
 
     if (labels.length) {
-      await Promise.all(labels.map(l =>
-        prisma.taskToLabel.create({
-          data: {
-            taskId: newTask.id,
-            labelId: l.id,
-          },
-        })
-      ));
+      await Promise.all(
+        labels.map((l) =>
+          prisma.taskToLabel.create({
+            data: {
+              taskId: newTask.id,
+              labelId: l.id,
+            },
+          })
+        )
+      );
     }
 
     return NextResponse.json({}, { status: 200 });

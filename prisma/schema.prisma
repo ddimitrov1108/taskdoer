@@ -17,6 +17,7 @@ model users {
   created_at   DateTime   @default(now()) @db.Timestamp(0)
   labels       labels[]
   projects     projects[]
+  tasks        tasks[]    // New field to establish the one-to-many relationship with tasks
 }
 
 model labels {
@@ -26,7 +27,7 @@ model labels {
   updated_at DateTime @default(now()) @db.Timestamp(0)
   created_at DateTime @default(now()) @db.Timestamp(0)
   users      users    @relation(fields: [uid], references: [id], onUpdate: Restrict, map: "labels_ibfk_1")
-  tasks      taskToLabel[] // New field using the intermediate table to establish the many-to-many relationship
+  tasks      taskToLabel[]
 
   @@index([uid], map: "uid")
 }
@@ -54,10 +55,12 @@ model tasks {
   updated_at  DateTime  @default(now()) @db.Timestamp(0)
   created_at  DateTime  @default(now()) @db.Timestamp(0)
   labels      taskToLabel[]
-
+  user        users?    @relation(fields: [uid], references: [id])
+  uid         Int?      @map("uid")
   project     projects? @relation(fields: [pid], references: [id])
   pid         Int?      @map("pid")
 
+  @@index([uid], map: "uid")
   @@index([pid], map: "pid")
 }
 

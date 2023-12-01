@@ -1,19 +1,19 @@
 import { PageHeader } from "@/components";
 import { LabelInteractiveButtons } from "@/components/interactive-buttons";
 import { TasksList } from "@/components/tasks";
-import { getLabelById } from "@/db/getLabelById";
-import { redirect } from "next/navigation";
+import { getLabelById } from "@/db";
+import { notFound } from "next/navigation";
 
 export const revalidate = 30;
 
 const page = async ({ params }) => {
   const label = await getLabelById(params.id);
 
-  if (!label) return redirect("/todo");
+  if (!label) return notFound();
 
   return (
     <>
-      <div className="mb-10 grid gap-4 md:flex md:items-end md:justify-between">
+      <div className="mb-8 grid gap-4 md:flex md:items-end md:justify-between">
         <PageHeader
           type="label"
           title={

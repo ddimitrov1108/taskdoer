@@ -24,9 +24,9 @@ const TodoPageSkeleton = () => {
           <Skeleton className="rounded-lg w-1/6 h-4" />
 
           <div className="grid gap-2">
-            <Skeleton className="rounded-lg w-full h-10" />
-            <Skeleton className="rounded-lg w-full h-10" />
-            <Skeleton className="rounded-lg w-full h-10" />
+            <Skeleton className="rounded-lg w-[70%] h-8" />
+            <Skeleton className="rounded-lg w-[90%] h-8" />
+            <Skeleton className="rounded-lg w-[80%] h-8" />
           </div>
         </div>
 
@@ -34,10 +34,10 @@ const TodoPageSkeleton = () => {
           <Skeleton className="rounded-lg w-1/5 h-4" />
 
           <div className="grid gap-2">
-            <Skeleton className="rounded-lg w-full h-10" />
-            <Skeleton className="rounded-lg w-full h-10" />
-            <Skeleton className="rounded-lg w-full h-10" />
-            <Skeleton className="rounded-lg w-full h-10" />
+            <Skeleton className="rounded-lg w-[90%] h-8" />
+            <Skeleton className="rounded-lg w-[70%] h-8" />
+            <Skeleton className="rounded-lg w-[80%] h-8" />
+            <Skeleton className="rounded-lg w-[90%] h-8" />
           </div>
         </div>
 
@@ -45,8 +45,8 @@ const TodoPageSkeleton = () => {
           <Skeleton className="rounded-lg w-1/5 h-4" />
 
           <div className="grid gap-2">
-            <Skeleton className="rounded-lg w-full h-10" />
-            <Skeleton className="rounded-lg w-full h-10" />
+            <Skeleton className="rounded-lg w-[70%] h-8" />
+            <Skeleton className="rounded-lg w-[80%] h-8" />
           </div>
         </div>
       </div>
