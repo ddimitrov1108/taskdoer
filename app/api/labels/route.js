@@ -30,12 +30,20 @@ export async function POST(req) {
   const formatedName = name.toLowerCase().replace(/\s+/g, "-");
 
   try {
-    await prisma.labels.create({
-      data: {
+    const doesExist = await prisma.labels.findFirst({
+      where: {
         uid: session.user.id,
         name: formatedName,
       },
     });
+
+    if (!doesExist)
+      await prisma.labels.create({
+        data: {
+          uid: session.user.id,
+          name: formatedName,
+        },
+      });
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {

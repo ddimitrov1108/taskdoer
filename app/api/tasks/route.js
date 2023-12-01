@@ -2,7 +2,6 @@ import { nextAuthConfig } from "@/lib/next-auth-config";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { validateIdParam } from "../api-utils";
 
 export async function POST(req) {
   const data = await req.json();
@@ -22,16 +21,13 @@ export async function POST(req) {
       if (!projectBind) return NextResponse.json({}, { status: 403 });
     }
 
-    const { name, description, dueDate, labels, important } = data;
+    const { pid, labels, ...dataToPass } = data;
 
     const newTask = await prisma.tasks.create({
       data: {
         pid: projectId,
         uid: userId,
-        name,
-        description,
-        dueDate,
-        important,
+        ...dataToPass,
         completed: false,
       },
     });

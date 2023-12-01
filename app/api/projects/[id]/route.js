@@ -10,12 +10,12 @@ export async function PUT(req, { params }) {
 
   const session = await getServerSession(nextAuthConfig);
   const data = await req.json();
-  const id = parseInt(params.id);
+  const projectId = parseInt(params.id);
 
   try {
     await prisma.projects.update({
       where: {
-        id,
+        id: projectId,
         uid: session.user.id,
       },
       data,
@@ -50,32 +50,32 @@ export async function DELETE(req, { params }) {
       },
     });
 
-    if (project) {
-      const labelsToDelete = project.tasks.flatMap((task) => task.labels);
-      const taskIdsToDelete = project.tasks.map((task) => task.id);
+    if (!project) return NextResponse.json({}, { status: 404 });
 
-      await prisma.$transaction([
-        ...labelsToDelete.map((label) =>
-          prisma.taskToLabel.deleteMany({
-            where: {
-              id: label.id,
-            },
-          })
-        ),
-        prisma.tasks.deleteMany({
+    const labelsToDelete = project.tasks.flatMap((task) => task.labels);
+    const taskIdsToDelete = project.tasks.map((task) => task.id);
+
+    await prisma.$transaction([
+      ...labelsToDelete.map((label) =>
+        prisma.taskToLabel.deleteMany({
           where: {
-            id: {
-              in: taskIdsToDelete,
-            },
+            id: label.id,
           },
-        }),
-        prisma.projects.delete({
-          where: {
-            id: projectId,
+        })
+      ),
+      prisma.tasks.deleteMany({
+        where: {
+          id: {
+            in: taskIdsToDelete,
           },
-        }),
-      ]);
-    }
+        },
+      }),
+      prisma.projects.delete({
+        where: {
+          id: projectId,
+        },
+      }),
+    ]);
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {

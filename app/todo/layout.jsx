@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { nextAuthConfig } from "@/lib/next-auth-config";
-import { getLabels, getProjects } from "@/db/user";
+import { getLabels, getProjects } from "@/db";
 import {
   HeaderBarNavigation,
   SideBarNavigation,

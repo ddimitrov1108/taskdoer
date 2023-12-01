@@ -45,19 +45,19 @@ export async function DELETE(req, { params }) {
       },
     });
 
-    if (label) {
-      await prisma.taskToLabel.deleteMany({
-        where: {
-          labelId: label.id,
-        },
-      });
+    if (!label) return NextResponse.json({}, { status: 404 });
 
-      await prisma.labels.delete({
-        where: {
-          id: label.id,
-        },
-      });
-    }
+    await prisma.taskToLabel.deleteMany({
+      where: {
+        labelId: label.id,
+      },
+    });
+
+    await prisma.labels.delete({
+      where: {
+        id: label.id,
+      },
+    });
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {

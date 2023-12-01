@@ -4,65 +4,78 @@ import { getServerSession } from "next-auth";
 import { nextAuthConfig } from "@/lib/next-auth-config";
 import { NextResponse } from "next/server";
 
-const getTaskById = async (id) => {
-  return await prisma.tasks.findUnique({
-    where: {
-      id,
-    },
-    include: {
-      labels: true,
-      project: true,
-    },
-  });
-};
-
 export async function PUT(req, { params }) {
   if (!validateIdParam(params.id))
     return NextResponse.json({}, { status: 400 });
 
   const session = await getServerSession(nextAuthConfig);
   const data = await req.json();
-  const id = parseInt(params.id);
+  const taskId = parseInt(params.id);
 
   try {
-    const task = await getTaskById(id);
+    const task = await prisma.tasks.findUnique({
+      where: {
+        id: taskId,
+        uid: session.user.id,
+      },
+      include: {
+        labels: true,
+        project: true,
+      },
+    });
 
     if (!task) return NextResponse.json({}, { status: 404 });
-
-    if (task.project.uid != session.user.id)
-      return NextResponse.json({}, { status: 403 });
 
     const { labels: incomingLabels, ...dataToUpdate } = data;
 
     await prisma.tasks.update({
       where: {
-        id,
+        id: task.id,
       },
       data: dataToUpdate,
     });
 
     if (incomingLabels.length) {
-      task.labels.forEach(async (l) => {
-        if (incomingLabels.find((o) => o.id === l.id)) return;
+      const incomingLabelIds = incomingLabels.map((label) => label.id);
+      const existingLabelIds = task.labels.map((label) => label.id);
 
-        await prisma.taskToLabel.delete({
-          data: {
+      if (
+        JSON.stringify(incomingLabelIds.sort()) !==
+        JSON.stringify(existingLabelIds.sort())
+      ) {
+        await prisma.taskToLabel.deleteMany({
+          where: {
             taskId: task.id,
-            labelId: l.id,
+            NOT: {
+              labelId: {
+                in: incomingLabelIds,
+              },
+            },
           },
         });
-      });
 
-      incomingLabels.forEach(async (l) => {
-        if (task.labels.find((o) => o.id === l.id)) return;
+        const labelsToAdd = incomingLabels.filter(
+          (label) => !existingLabelIds.includes(label.id)
+        );
 
-        await prisma.taskToLabel.create({
-          data: {
-            taskId: task.id,
-            labelId: l.id,
-          },
-        });
-      });
+        for (const labelToAdd of labelsToAdd) {
+          const existingEntry = await prisma.taskToLabel.findFirst({
+            where: {
+              taskId: task.id,
+              labelId: labelToAdd.id,
+            },
+          });
+
+          if (!existingEntry) {
+            await prisma.taskToLabel.create({
+              data: {
+                taskId: task.id,
+                labelId: labelToAdd.id,
+              },
+            });
+          }
+        }
+      }
     } else {
       await prisma.taskToLabel.deleteMany({
         where: {
@@ -83,27 +96,36 @@ export async function DELETE(req, { params }) {
     return NextResponse.json({}, { status: 400 });
 
   const session = await getServerSession(nextAuthConfig);
-  const id = parseInt(params.id);
+  const taskId = parseInt(params.id);
 
   try {
-    const task = await getTaskById(id);
+    const task = await prisma.tasks.findUnique({
+      where: {
+        id: taskId,
+        uid: session.user.id,
+      },
+      include: {
+        labels: true,
+        project: true,
+      },
+    });
 
-    if (task) {
-      if (task.project.uid === session.user.id) {
-        if (task.labels.length) {
-          await prisma.taskToLabel.deleteMany({
-            where: {
-              id: task.labels[0].id,
-            },
-          });
-        }
+    if (!task) return NextResponse.json({}, { status: 404 });
 
-        await prisma.tasks.delete({
+    if (task.project.uid === session.user.id) {
+      if (task.labels.length) {
+        await prisma.taskToLabel.deleteMany({
           where: {
-            id: task.id,
+            taskId: task.id,
           },
         });
       }
+
+      await prisma.tasks.delete({
+        where: {
+          id: task.id,
+        },
+      });
     }
 
     return NextResponse.json({}, { status: 200 });
