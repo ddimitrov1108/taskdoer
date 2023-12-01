@@ -35,7 +35,7 @@ export async function PUT(req, { params }) {
       data: dataToUpdate,
     });
 
-    if (incomingLabels.length) {
+    if (incomingLabels?.length) {
       const incomingLabelIds = incomingLabels.map((label) => label.id);
       const existingLabelIds = task.labels.map((label) => label.id);
 
@@ -112,7 +112,7 @@ export async function DELETE(req, { params }) {
 
     if (!task) return NextResponse.json({}, { status: 404 });
 
-    if (task.labels.length) {
+    if (task?.labels?.length) {
       await prisma.taskToLabel.deleteMany({
         where: {
           taskId: task.id,
