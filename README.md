@@ -48,6 +48,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ### Future to be added:
 
 - [x] Create tasks without project bind
-- [x] Add a "past schedule" section to task list
+- [x] Add a "past due" section in task list
 - [ ] Option to delete all tasks from a project/label
 - [ ] drag and drop in sections (example: tasks -> completed tasks)
