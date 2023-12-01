@@ -3,8 +3,8 @@
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { HiOutlinePencilSquare, HiOutlineTrash } from "react-icons/hi2";
-import { IconButton } from "./ui";
-import { DeleteConfirmationModal, LabelModal } from "./modals";
+import { IconButton } from "../ui";
+import { DeleteConfirmationModal, LabelModal } from "../modals";
 import { enqueueSnackbar } from "notistack";
 
 const LabelInteractiveButtons = ({ label }) => {

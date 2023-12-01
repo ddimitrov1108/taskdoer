@@ -1,4 +1,5 @@
-import { PageHeader, ProjectInteractiveButtons } from "@/components";
+import { PageHeader } from "@/components";
+import { ProjectInteractiveButtons } from "@/components/interactive-buttons";
 import { TasksList } from "@/components/tasks";
 import { getProjectById } from "@/db/getProjectById";
 import { redirect } from "next/navigation";

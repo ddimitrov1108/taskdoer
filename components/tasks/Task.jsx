@@ -3,7 +3,6 @@ import {
   HiDocumentText,
   HiOutlineEllipsisVertical,
   HiOutlineSquares2X2,
-  HiOutlineStar,
   HiOutlineTrash,
   HiStar,
 } from "react-icons/hi2";
@@ -15,17 +14,16 @@ import { TaskContext } from "../providers/TaskProvider";
 import { useContext } from "react";
 import clsx from "clsx";
 
-const Task = ({
-  task,
-  onCompletedHandler = () => {},
-  onImportantHandler = () => {},
-}) => {
+const Task = ({ task }) => {
   const taskContext = useContext(TaskContext);
 
   const onTaskClickHandler = () => {
     taskContext.setSelectedTask(task);
     taskContext.setOpenDetailsTaskModal(true);
   };
+
+  const onCompletedHandler = () => taskContext.setCompleted(task);
+  const onImportantHandler = () => taskContext.setImportant(task);
 
   const onTaskDeleteHandler = () => {
     taskContext.setSelectedTask(task);
@@ -64,7 +62,7 @@ const Task = ({
           )}
           onClick={(e) => {
             e.stopPropagation();
-            onCompletedHandler(task);
+            onCompletedHandler();
           }}
         >
           <HiCheck />
@@ -119,10 +117,10 @@ const Task = ({
               )}
               onClick={(e) => {
                 e.stopPropagation();
-                onImportantHandler(task);
+                onImportantHandler();
               }}
             >
-              {task.important ? <HiStar /> : <HiOutlineStar />}
+              <HiStar />
             </button>
 
             <Dropdown

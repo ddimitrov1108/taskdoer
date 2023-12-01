@@ -44,3 +44,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+###Future to be added:
+
+- [x] Create tasks without project bind
+- [x] Add a "past schedule" section to task list
+- [ ] Option to delete all tasks from a project/label
+- [ ] drag and drop in sections (example: tasks -> completed tasks)

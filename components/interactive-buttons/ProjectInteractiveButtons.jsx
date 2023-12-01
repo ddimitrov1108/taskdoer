@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { DeleteConfirmationModal, ProjectModal, TaskModal } from "./modals";
-import { Button, IconButton } from "./ui";
-import { HiOutlinePencilSquare, HiPlus, HiOutlineTrash } from "react-icons/hi2";
+import { DeleteConfirmationModal, ProjectModal, TaskModal } from "../modals";
+import { IconButton } from "../ui";
+import { HiOutlinePencilSquare, HiOutlineTrash } from "react-icons/hi2";
 import { enqueueSnackbar } from "notistack";
+import { AddTaskButton } from "../tasks";
 
 const ProjectInteractiveButtons = ({ project }) => {
   const params = useParams();
@@ -30,7 +31,6 @@ const ProjectInteractiveButtons = ({ project }) => {
     setOpenDeleteProjectModal(false);
   };
 
-  const onNewTaskHandler = () => setOpenNewTaskModal(true);
   const onEditProjectHandler = () => setOpenEditProjectModal(true);
   const onDeleteProjectHandler = () => setOpenDeleteProjectModal(true);
 
@@ -58,20 +58,13 @@ const ProjectInteractiveButtons = ({ project }) => {
       />
 
       <div className="min-w-full md:min-w-fit flex items-center justify-between gap-2">
-        <Button
-          size="sm"
-          variant="primary"
-          className="flex items-center gap-1 justify-center"
-          onClick={onNewTaskHandler}
-        >
-          <HiPlus className="text-xl" /> Add task
-        </Button>
+        <AddTaskButton onClick={() => setOpenNewTaskModal(true)} />
 
         <div className="flex items-center gap-2">
           <IconButton
             title="Edit Project"
             onClick={onEditProjectHandler}
-            className="p-2 bg-black-light/10 text-xl"
+            className="p-3 bg-black-light/10 text-xl"
           >
             <HiOutlinePencilSquare className="text-primary-main hover:text-primary-main" />
           </IconButton>
@@ -79,7 +72,7 @@ const ProjectInteractiveButtons = ({ project }) => {
           <IconButton
             title="Delete Project"
             onClick={onDeleteProjectHandler}
-            className="p-2 bg-black-light/10 text-xl"
+            className="p-3 bg-black-light/10 text-xl"
           >
             <HiOutlineTrash className="text-error-main hover:text-error-main" />
           </IconButton>
