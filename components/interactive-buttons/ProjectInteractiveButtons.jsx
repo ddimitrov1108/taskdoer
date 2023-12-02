@@ -8,6 +8,7 @@ import { HiOutlinePencilSquare, HiOutlineTrash } from "react-icons/hi2";
 import { enqueueSnackbar } from "notistack";
 import { AddTaskButton } from "../tasks";
 import { TaskContext } from "../providers/TaskProvider";
+import { ToolTip } from "..";
 
 const ProjectInteractiveButtons = ({ project }) => {
   const taskContext = useContext(TaskContext);
@@ -57,6 +58,9 @@ const ProjectInteractiveButtons = ({ project }) => {
 
         <div className="flex items-center gap-2">
           <IconButton
+            data-tooltip-id="edit-project-tooltip"
+            data-tooltip-content="Edit Project"
+            data-tooltip-place="bottom"
             title="Edit Project"
             onClick={onEditProjectHandler}
             className="p-3 bg-black-light/10 text-xl"
@@ -65,12 +69,18 @@ const ProjectInteractiveButtons = ({ project }) => {
           </IconButton>
 
           <IconButton
+            data-tooltip-id="delete-project-tooltip"
+            data-tooltip-content="Delete Project"
+            data-tooltip-place="bottom"
             title="Delete Project"
             onClick={onDeleteProjectHandler}
             className="p-3 bg-black-light/10 text-xl"
           >
             <HiOutlineTrash className="text-error-main hover:text-error-main" />
           </IconButton>
+
+          <ToolTip id="edit-project-tooltip" className="bg-red-500" />
+          <ToolTip id="delete-project-tooltip" className="bg-red-500" />
         </div>
       </div>
     </>

@@ -39,10 +39,7 @@ export async function PUT(req, { params }) {
       const incomingLabelIds = incomingLabels.map((label) => label.id);
       const existingLabelIds = task.labels.map((label) => label.id);
 
-      if (
-        JSON.stringify(incomingLabelIds.sort()) !==
-        JSON.stringify(existingLabelIds.sort())
-      ) {
+      if (incomingLabelIds.every((el, i) => el.id != existingLabelIds[i].id)) {
         await prisma.taskToLabel.deleteMany({
           where: {
             taskId: task.id,

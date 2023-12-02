@@ -1,7 +1,7 @@
 "use client";
-import { HiOutlineArrowRightOnRectangle, HiOutlineUser } from "react-icons/hi2"
-import { Dropdown, DropdownListItem } from "../../ui"
-import { navigationListLinks } from "../../constants"
+import { HiOutlineArrowRightOnRectangle, HiOutlineUser } from "react-icons/hi2";
+import { Dropdown, DropdownListItem } from "../../ui";
+import { navigationListLinks } from "../../constants";
 import { signOut } from "next-auth/react";
 
 const UserDropdownMenu = ({ user }) => {
@@ -14,7 +14,9 @@ const UserDropdownMenu = ({ user }) => {
             <HiOutlineUser />
           </div>
           <div className="px-2 w-full grid text-left overflow-hidden">
-            <span className="font-medium text-white truncate ...">{user?.name}</span>
+            <span className="font-medium text-white truncate ...">
+              {user?.name}
+            </span>
             <span className="text-sm text-main max-w-full truncate ...">
               {user?.email}
             </span>
@@ -45,6 +47,6 @@ const UserDropdownMenu = ({ user }) => {
         }}
       />
     </Dropdown>
-  )
-}
-export default UserDropdownMenu
+  );
+};
+export default UserDropdownMenu;
