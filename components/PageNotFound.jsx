@@ -12,7 +12,7 @@ const PageNotFound = () => {
             width={128}
             height={128}
             alt="page-notfound.svg"
-            className="w-24 h-24 lg:w-32 lg:h-32 mx-auto"
+            className="w-24 h-24 lg:w-32 lg:h-32 mx-auto mb-4"
           />
 
           <p className="text-center text-main">

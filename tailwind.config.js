@@ -42,9 +42,9 @@ module.exports = {
           dark: "#05A660",
         },
         error: {
-          light: "#FF5C5C",
-          main: "#FF3B3B",
-          dark: "#E53535",
+          light: "#ff7878",
+          main: "#FF6464",
+          dark: "#ff5050",
         },
         warning: {
           light: "#FDAC42",
