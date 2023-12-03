@@ -42,6 +42,7 @@ const TaskForm = ({
         body: JSON.stringify({
           ...values,
           dueDate: new Date(values.dueDate),
+          editLabels: true,
         }),
         signal,
       })
@@ -62,6 +63,7 @@ const TaskForm = ({
           ...values,
           pid: params.id,
           dueDate: new Date(values.dueDate),
+          editLabels: true,
         }),
         signal,
       })

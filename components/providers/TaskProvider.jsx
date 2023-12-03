@@ -24,6 +24,7 @@ const TaskProvider = ({ children }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         completed: !task.completed,
+        editLabels: false,
       }),
     })
       .then(() => {
@@ -41,6 +42,7 @@ const TaskProvider = ({ children }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         important: !task.important,
+        editLabels: false,
       }),
     })
       .then(() => {

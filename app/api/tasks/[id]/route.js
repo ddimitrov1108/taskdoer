@@ -26,7 +26,7 @@ export async function PUT(req, { params }) {
 
     if (!task) return NextResponse.json({}, { status: 404 });
 
-    const { labels: incomingLabels, ...dataToUpdate } = data;
+    const { editLabels, labels: incomingLabels, ...dataToUpdate } = data;
 
     await prisma.tasks.update({
       where: {
@@ -35,58 +35,60 @@ export async function PUT(req, { params }) {
       data: dataToUpdate,
     });
 
-    if (incomingLabels?.length) {
-      const incomingLabelIds = incomingLabels.map((label) => label.id);
-      const existingLabelIds = task.labels.map((label) => label.labelId);
+    if (editLabels) {
+      if (incomingLabels?.length) {
+        const incomingLabelIds = incomingLabels.map((label) => label.id);
+        const existingLabelIds = task.labels.map((label) => label.labelId);
 
-      console.log(incomingLabelIds, existingLabelIds);
+        console.log(incomingLabelIds, existingLabelIds);
 
-      const existingLabelIdsSet = new Set(existingLabelIds);
+        const existingLabelIdsSet = new Set(existingLabelIds);
 
-      const differentLabels =
-        incomingLabelIds.length !== existingLabelIds.length ||
-        !incomingLabelIds.every((id) => existingLabelIdsSet.has(id));
+        const differentLabels =
+          incomingLabelIds.length !== existingLabelIds.length ||
+          !incomingLabelIds.every((id) => existingLabelIdsSet.has(id));
 
-      if (differentLabels) {
-        await prisma.taskToLabel.deleteMany({
-          where: {
-            taskId: task.id,
-            NOT: {
-              labelId: {
-                in: incomingLabelIds,
-              },
-            },
-          },
-        });
-
-        const labelsToAdd = incomingLabels.filter(
-          (label) => !existingLabelIds.includes(label.id)
-        );
-
-        for (const labelToAdd of labelsToAdd) {
-          const existingEntry = await prisma.taskToLabel.findFirst({
+        if (differentLabels) {
+          await prisma.taskToLabel.deleteMany({
             where: {
               taskId: task.id,
-              labelId: labelToAdd.id,
+              NOT: {
+                labelId: {
+                  in: incomingLabelIds,
+                },
+              },
             },
           });
 
-          if (!existingEntry) {
-            await prisma.taskToLabel.create({
-              data: {
+          const labelsToAdd = incomingLabels.filter(
+            (label) => !existingLabelIds.includes(label.id)
+          );
+
+          for (const labelToAdd of labelsToAdd) {
+            const existingEntry = await prisma.taskToLabel.findFirst({
+              where: {
                 taskId: task.id,
                 labelId: labelToAdd.id,
               },
             });
+
+            if (!existingEntry) {
+              await prisma.taskToLabel.create({
+                data: {
+                  taskId: task.id,
+                  labelId: labelToAdd.id,
+                },
+              });
+            }
           }
         }
+      } else {
+        await prisma.taskToLabel.deleteMany({
+          where: {
+            taskId: task.id,
+          },
+        });
       }
-    } else {
-      await prisma.taskToLabel.deleteMany({
-        where: {
-          taskId: task.id,
-        },
-      });
     }
 
     return NextResponse.json({}, { status: 200 });
