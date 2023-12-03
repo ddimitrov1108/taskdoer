@@ -56,9 +56,7 @@ const TaskInteractiveButtons = ({ task }) => {
   return (
     <Dropdown
       btn={
-        <IconButton
-          className="text-xl p-1"
-        >
+        <IconButton className="text-xl p-1">
           <HiEllipsisVertical />
         </IconButton>
       }

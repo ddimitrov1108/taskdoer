@@ -20,7 +20,8 @@ const Task = ({ task }) => {
   };
 
   const onTaskClickHandler = () => {
-    alert("show task details");
+    // taskContext.setSelectedTask(task);
+    // taskContext.setOpenDetailsTaskModal(true);
   };
 
   const onCompletedHandler = () => taskContext.setCompleted(task);

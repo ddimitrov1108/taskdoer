@@ -37,9 +37,17 @@ export async function PUT(req, { params }) {
 
     if (incomingLabels?.length) {
       const incomingLabelIds = incomingLabels.map((label) => label.id);
-      const existingLabelIds = task.labels.map((label) => label.id);
+      const existingLabelIds = task.labels.map((label) => label.labelId);
 
-      if (incomingLabelIds.every((el, i) => el.id != existingLabelIds[i].id)) {
+      console.log(incomingLabelIds, existingLabelIds);
+
+      const existingLabelIdsSet = new Set(existingLabelIds);
+
+      const differentLabels =
+        incomingLabelIds.length !== existingLabelIds.length ||
+        !incomingLabelIds.every((id) => existingLabelIdsSet.has(id));
+
+      if (differentLabels) {
         await prisma.taskToLabel.deleteMany({
           where: {
             taskId: task.id,

@@ -1,6 +1,6 @@
 "use client";
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { HiChevronDown } from "react-icons/hi2";
 import clsx from "clsx";
 
@@ -14,6 +14,12 @@ const Dropdown = ({
   children,
   ...restProps
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <Menu as="div" className={clsx("", className)} {...restProps}>
       <Menu.Button
