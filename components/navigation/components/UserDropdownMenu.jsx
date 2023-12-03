@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { HiOutlineArrowRightOnRectangle, HiOutlineUser } from "react-icons/hi2";
 import { Dropdown, DropdownListItem } from "../../ui";
 import { navigationListLinks } from "../../constants";
@@ -23,16 +24,16 @@ const UserDropdownMenu = ({ user }) => {
           </div>
         </>
       }
-      menuItemsClassName="border border-black-light/40 bg-black-main p-2"
       chevronClassName="pr-0.5"
       chevronDown
     >
       {navigationListLinks.userDropdown.map((link) => (
         <DropdownListItem
           key={link.id}
-          as="link"
+          as={Link}
+          href={link.href}
           item={link}
-          className="text-light hover:text-white hover:bg-black-light/10"
+          className="text-light hover:text-white"
           iconClassName="text-primary-main"
         />
       ))}
@@ -40,7 +41,7 @@ const UserDropdownMenu = ({ user }) => {
       <DropdownListItem
         as="button"
         onClick={() => signOut()}
-        className="text-error-main hover:text-error-main hover:bg-black-light/10"
+        className="text-error-main"
         item={{
           name: "Sign Out",
           icon: <HiOutlineArrowRightOnRectangle />,

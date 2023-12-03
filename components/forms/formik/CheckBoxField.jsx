@@ -1,5 +1,4 @@
 "use client";
-
 import { Switch } from "@headlessui/react";
 import { Label } from ".";
 import clsx from "clsx";

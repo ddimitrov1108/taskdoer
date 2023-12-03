@@ -10,9 +10,8 @@ const Label = ({
   return (
     <div
       className={clsx(
-        "text-[#C7C9D9] min-w-fit",
+        "text-sm text-[#C7C9D9] min-w-fit",
         className,
-        !ignoreResponsiveStyle ? "text-sm md:text-base" : "text-base"
       )}
       {...restProps}
     >

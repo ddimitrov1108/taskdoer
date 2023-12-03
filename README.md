@@ -2,15 +2,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ### Future to be added:
 
+- [ ] @IMPORTANT Code cleanup on all components
+
 - [x] Create tasks without project bind
 - [x] Add a "past due" section in task list
-- [ ] Does the user actually needs tooltips?
 - [ ] API integrity and user privacy performance fixes
 - [ ] @OPTIONAL bcrypt the id of tasks/labels/projects to keep the user's privacy
-- [ ] Option to delete all tasks from a project/label
+- [x] Option to delete all tasks from a project/label
 - [ ] Drag and drop in sections (example: tasks -> completed tasks)
 - [ ] Move or copy a task to another project
-- [ ] Performance improvements on react-tooltip component
 - [ ] Show a sidebar with task information on XL screens and a sidebar on Mobile to LG screens.
       idea:
         show details about the task and include interactive task buttons like EDIT/MOVE/COPY/DELETe

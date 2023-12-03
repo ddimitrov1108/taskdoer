@@ -33,7 +33,9 @@ const NavLink = ({
       </div>
 
       {count > 0 && (
-        <span className="pr-2 min-w-fit min-h-fit text-primary-main">{count}</span>
+        <span className="pr-2 min-w-fit min-h-fit text-primary-main">
+          {count}
+        </span>
       )}
     </Link>
   );

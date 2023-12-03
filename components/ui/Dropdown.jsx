@@ -3,7 +3,6 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { HiChevronDown } from "react-icons/hi2";
 import clsx from "clsx";
-import DropdownList from "./DropdownList";
 
 const Dropdown = ({
   btn = "Dropdown",
@@ -17,10 +16,7 @@ const Dropdown = ({
 }) => {
   return (
     <Menu as="div" className={clsx("", className)} {...restProps}>
-      <Menu.Button
-        className={btnClassName}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <Menu.Button as="div" className={btnClassName}>
         {({ open }) => (
           <>
             {btn}
@@ -51,7 +47,7 @@ const Dropdown = ({
         <div className="relative">
           <Menu.Items
             className={clsx(
-              "overflow-hidden z-40 absolute right-0 mt-2 w-56 origin-top-right rounded-lg shadow-xl focus:outline-none outline-none select-none",
+              "border border-black-light/40 bg-black-main p-2 overflow-hidden z-40 absolute right-0 mt-2 w-56 origin-top-right rounded-lg shadow-xl focus:outline-none outline-none select-none",
               menuItemsClassName
             )}
           >

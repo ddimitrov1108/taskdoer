@@ -42,6 +42,13 @@ const alert = cva("div", {
 });
 
 const Alert = ({ variant = "info", children, ...restProps }) => {
+  const IconComponent = {
+    info: HiInformationCircle,
+    success: HiCheckCircle,
+    error: HiExclamationCircle,
+    warning: HiExclamationTriangle,
+  }[variant];
+
   return (
     <div
       className={clsx(
@@ -51,15 +58,7 @@ const Alert = ({ variant = "info", children, ...restProps }) => {
       {...restProps}
     >
       <div className="text-2xl">
-        {variant === "info" ? (
-          <HiInformationCircle />
-        ) : variant === "success" ? (
-          <HiCheckCircle />
-        ) : variant === "error" ? (
-          <HiExclamationCircle />
-        ) : (
-          <HiExclamationTriangle />
-        )}
+        <IconComponent />
       </div>
 
       <span className="text-sm">{children}</span>

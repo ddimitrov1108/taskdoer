@@ -25,7 +25,6 @@
     "react-dnd": "^16.0.1",
     "react-dom": "^18",
     "react-icons": "^4.12.0",
-    "react-tooltip": "^5.24.0",
     "sharp": "^0.32.6",
     "swr": "^2.2.4",
     "uuid": "^9.0.1",

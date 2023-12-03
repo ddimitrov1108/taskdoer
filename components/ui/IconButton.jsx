@@ -6,13 +6,15 @@ const IconButton = ({
   children,
   type = "button",
   className,
+  ignoreHoverEffect = false,
   ...restProps
 }) => {
   return (
     <button
       type={type}
       className={clsx(
-        "text-main hover:text-white hover:bg-black-light/10 outline-none grid items-center justify-center p-1.5 transition-all rounded-full",
+        "text-main hover:text-white outline-none grid items-center justify-center p-1.5 transition-all rounded-full",
+        !ignoreHoverEffect && "hover:bg-black-light/10",
         className
       )}
       {...restProps}

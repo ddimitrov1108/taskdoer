@@ -6,7 +6,6 @@ import clsx from "clsx";
 const DisclouseContainer = ({
   title = "",
   appendToTitle,
-  boxHoverEffect = false,
   hideChevron = false,
   className,
   btnClassName,
@@ -24,10 +23,7 @@ const DisclouseContainer = ({
             <Disclosure.Button
               as="div"
               className={clsx(
-                "text-main cursor-pointer group flex items-center font-medium transition-all",
-                boxHoverEffect
-                  ? "hover:text-white"
-                  : "hover:text-primary-main",
+                "text-main hover:text-light cursor-pointer group flex items-center font-medium transition-all",
                 btnClassName
               )}
             >
@@ -40,18 +36,13 @@ const DisclouseContainer = ({
                 >
                   {!hideChevron && <HiChevronDown />}
                 </div>
-
                 {title}
               </div>
-
               {appendToTitle}
             </Disclosure.Button>
 
             <Disclosure.Panel
-              className={clsx(
-                "grid text-black transition-all",
-                panelClassName
-              )}
+              className={clsx("grid text-black transition-all", panelClassName)}
             >
               {children}
             </Disclosure.Panel>
@@ -61,4 +52,5 @@ const DisclouseContainer = ({
     </div>
   );
 };
+
 export default DisclouseContainer;

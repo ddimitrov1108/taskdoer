@@ -1,5 +1,4 @@
 "use client";
-
 import useSWR from "swr";
 import { fetcher } from "@/lib/swr-fetcher";
 import { Chip, Spinner } from "@/components/ui";
@@ -40,7 +39,9 @@ const LabelsSelectField = ({
       />
 
       {error ? (
-        <span className="text-medium">You have no labels to show here</span>
+        <span className="text-sm text-main">
+          You have no labels to show here
+        </span>
       ) : isLoading ? (
         <Spinner className="text-primary-main" />
       ) : labels.length > 0 ? (
@@ -59,7 +60,9 @@ const LabelsSelectField = ({
           ))}
         </div>
       ) : (
-        <span className="text-medium">You have no labels to show here</span>
+        <span className="text-sm text-main">
+          You have no labels to show here
+        </span>
       )}
 
       {errors[field.name] && touched[field.name] && (

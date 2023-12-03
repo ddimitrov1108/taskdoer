@@ -37,7 +37,6 @@ const TodoPageSkeleton = () => {
             <Skeleton className="rounded-lg w-[90%] h-8" />
             <Skeleton className="rounded-lg w-[70%] h-8" />
             <Skeleton className="rounded-lg w-[80%] h-8" />
-            <Skeleton className="rounded-lg w-[90%] h-8" />
           </div>
         </div>
 

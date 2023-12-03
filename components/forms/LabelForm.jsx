@@ -41,7 +41,7 @@ const LabelForm = ({
       await fetch("/api/labels", {
         method: "POST",
         body: JSON.stringify({ name }),
-        signal
+        signal,
       })
         .then(() => {
           enqueueSnackbar("Label created successfully", { variant: "success" });

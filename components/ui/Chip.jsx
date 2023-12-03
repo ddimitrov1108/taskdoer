@@ -23,4 +23,5 @@ const Chip = ({
     </button>
   );
 };
+
 export default Chip;

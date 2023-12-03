@@ -35,7 +35,7 @@ const button = cva("button", {
       text: ["text-primary-main", "bg-inherit", "border-gray-600/40"],
       basic: [
         "bg-white",
-        "borderborder-gray-200 hover:border-gray-300-light/60",
+        "border border-gray-200 hover:border-gray-300-light/60",
         "hover:borderborder-gray-200 hover:border-gray-300-light",
       ],
     },
@@ -78,9 +78,7 @@ export default function Button({
           <Spinner
             className={clsx(
               "w-fit h-fit mx-auto",
-              variant === "outlined" ||
-                variant === "text" ||
-                variant === "basic"
+              ["outlined", "text", "basic"].includes(variant)
                 ? "text-primary-main"
                 : "text-white"
             )}

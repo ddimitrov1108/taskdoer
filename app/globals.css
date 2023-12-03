@@ -99,13 +99,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
 }
 
-.tooltip-element {
-  color: #C7C9D9 !important;
-  background-color: #28293D !important;
-  border: 1px solid rgb(85 87 112 / 0.4) !important;
-  border-radius: 8px !important;
-}
-
 .loader-spinner svg {
   width: 1.45em;
   -webkit-transform-origin: center;

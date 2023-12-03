@@ -1,3 +1,4 @@
+"use client";
 import { HiOutlineExclamationTriangle } from "react-icons/hi2";
 import { Button, Modal } from "../ui";
 import { useForm } from "../hooks";

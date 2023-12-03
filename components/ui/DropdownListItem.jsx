@@ -1,42 +1,25 @@
 "use client";
 import { Menu } from "@headlessui/react";
 import clsx from "clsx";
-import Link from "next/link";
-
-const defaultClassNames =
-  "transition-all w-full p-2 rounded-lg flex items-center gap-3";
 
 const DropdownListItem = ({
   as = "button",
   item,
   className,
   iconClassName,
-  onClick = () => {},
+  ...restProps
 }) => {
-  const itemBody = (
-    <>
-      <div className={clsx("text-xl", iconClassName)}>{item.icon}</div>
-      <span>{item.name}</span>
-    </>
-  );
-
   return (
-    <Menu.Item>
-      {as === "button" ? (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onClick();
-          }}
-          className={clsx(defaultClassNames, className)}
-        >
-          {itemBody}
-        </button>
-      ) : (
-        <Link href={item.href} className={clsx(defaultClassNames, className)}>
-          {itemBody}
-        </Link>
+    <Menu.Item
+      as={as}
+      className={clsx(
+        "transition-all w-full p-2 rounded-lg flex items-center gap-2 hover:bg-black-light/10",
+        className
       )}
+      {...restProps}
+    >
+      <div className={clsx("text-xl", iconClassName)}>{item.icon}</div>
+      {item.name}
     </Menu.Item>
   );
 };

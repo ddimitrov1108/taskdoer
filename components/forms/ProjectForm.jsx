@@ -30,7 +30,7 @@ const ProjectForm = ({
           name,
           color,
         }),
-        signal
+        signal,
       })
         .then(() => {
           enqueueSnackbar("Project edited successfully", {
@@ -49,7 +49,7 @@ const ProjectForm = ({
           name,
           color,
         }),
-        signal
+        signal,
       })
         .then((response) => response.json())
         .then((data) => {

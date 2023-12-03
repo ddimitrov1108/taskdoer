@@ -1,5 +1,4 @@
 "use client";
-
 import { NotistackProvider } from "@/components/providers";
 import { SessionProvider } from "next-auth/react";
 

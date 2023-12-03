@@ -1,51 +1,30 @@
-import {
-  HiCheck,
-  HiDocumentText,
-  HiOutlineEllipsisVertical,
-  HiOutlineSquares2X2,
-  HiOutlineTrash,
-  HiStar,
-} from "react-icons/hi2";
+"use client";
+import { HiCheck, HiDocumentText, HiStar } from "react-icons/hi2";
 import Link from "next/link";
-import { Chip, Dropdown, DropdownListItem } from "../ui";
+import { Chip, IconButton } from "../ui";
 import { format, isPast, isToday, isTomorrow } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { TaskContext } from "../providers/TaskProvider";
 import { useContext } from "react";
 import clsx from "clsx";
+import { TaskInteractiveButtons } from "../interactive-buttons";
 
 const Task = ({ task }) => {
   const taskContext = useContext(TaskContext);
+  const isPastDue = isPast(task.dueDate);
+
+  const getDueDateText = () => {
+    if (isToday(task.dueDate)) return "Today";
+    if (isTomorrow(task.dueDate)) return "Tomorrow";
+    return format(task.dueDate, "EEE, d MMM, yy", { locale: enUS });
+  };
 
   const onTaskClickHandler = () => {
-    taskContext.setSelectedTask(task);
-    taskContext.setOpenDetailsTaskModal(true);
+    alert("show task details");
   };
 
   const onCompletedHandler = () => taskContext.setCompleted(task);
   const onImportantHandler = () => taskContext.setImportant(task);
-
-  const onTaskDeleteHandler = () => {
-    taskContext.setSelectedTask(task);
-    taskContext.setOpenDeleteTaskModal(true);
-  };
-
-  const taskInteractions = [
-    {
-      name: "Details",
-      icon: <HiOutlineSquares2X2 />,
-      onClick: onTaskClickHandler,
-      className: "text-light hover:text-light",
-      iconClassName: "text-primary-main",
-    },
-    {
-      name: "Delete",
-      icon: <HiOutlineTrash />,
-      onClick: onTaskDeleteHandler,
-      className: "text-error-main hover:text-error-main",
-      iconClassName: "text-error-main",
-    },
-  ];
 
   return (
     <div
@@ -87,16 +66,10 @@ const Task = ({ task }) => {
               <div
                 className={clsx(
                   "max-w-fit max-h-fit text-xs xxs:text-sm",
-                  isPast(task.dueDate) ? "text-error-main" : "text-primary-main"
+                  isPastDue ? "text-error-main" : "text-primary-main"
                 )}
               >
-                {isToday(task.dueDate)
-                  ? "Today"
-                  : isTomorrow(task.dueDate)
-                  ? "Tomorrow"
-                  : format(task.dueDate, "EEE, d MMM, yy", {
-                      locale: enUS,
-                    })}
+                {getDueDateText()}
               </div>
               {task.description && (
                 <>
@@ -108,9 +81,9 @@ const Task = ({ task }) => {
           </div>
 
           <div className="w-fit flex items-center">
-            <button
+            <IconButton
               className={clsx(
-                "transition-all p-1 text-xl hover:bg-transparent",
+                "p-1 transition-all text-xl",
                 task.important
                   ? "text-warning-main"
                   : "text-main hover:text-light"
@@ -121,27 +94,9 @@ const Task = ({ task }) => {
               }}
             >
               <HiStar />
-            </button>
+            </IconButton>
 
-            <Dropdown
-              btnClassName="transition-all text-2xl text-main w-full p-1 hover:text-light rounded-md flex items-center gap-3"
-              btn={<HiOutlineEllipsisVertical />}
-              menuItemsClassName="border border-black-light/40 bg-black-main p-2"
-              chevronClassName="pr-0.5"
-            >
-              {taskInteractions.map(
-                ({ id, className, iconClassName, onClick, ...item }, index) => (
-                  <DropdownListItem
-                    key={index}
-                    as="button"
-                    onClick={onClick}
-                    item={item}
-                    className={clsx(className, "hover:bg-black-light/10")}
-                    iconClassName={iconClassName}
-                  />
-                )
-              )}
-            </Dropdown>
+            <TaskInteractiveButtons task={task} />
           </div>
         </div>
 
