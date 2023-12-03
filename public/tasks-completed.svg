@@ -7,6 +7,14 @@
 
 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
 
-<g id="SVGRepo_iconCarrier"> <g id="Interface / Check_All"> <path id="Vector" d="M8 12.4854L12.2426 16.728L20.727 8.24268M3 12.4854L7.24264 16.728M15.7279 8.24268L12.5 11.5001" stroke="#06C270" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </g> </g>
+<g id="SVGRepo_iconCarrier"> 
+    <g id="Interface / Check_All"> 
+  <path id="Vector" d="M8 12.4854L12.2426 16.728L20.727 8.24268M3 16.728M15.7279" stroke="#06C270" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> 
+  <path id="Vector2" d="M8 8.24268M3 12.4854L7.24264 16.728M15.7279 8.24268L12.5 11.5001" stroke="#06C27080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> 
+
+  </g>
+
+
+ </g>
 
 </svg>

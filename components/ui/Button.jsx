@@ -15,8 +15,9 @@ const button = cva("button", {
       ],
       secondary: [
         "bg-primary-main/20",
-        "border-border-gray-600/40",
+        "border-primary-main/20",
         "text-primary-main",
+        "hover:bg-primary-main hover:text-white"
       ],
       outlined: [
         "border-primary-main",
@@ -36,7 +37,7 @@ const button = cva("button", {
       basic: [
         "bg-white",
         "border border-gray-200 hover:border-gray-300-light/60",
-        "hover:borderborder-gray-200 hover:border-gray-300-light",
+        "hover:border-gray-200 hover:border-gray-300-light",
       ],
     },
     size: {

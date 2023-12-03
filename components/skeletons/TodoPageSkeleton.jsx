@@ -11,11 +11,7 @@ const TodoPageSkeleton = () => {
 
         <div className="min-w-full md:min-w-fit flex items-center justify-between gap-2">
           <Skeleton className="rounded-lg w-24 h-6" />
-
-          <div className="flex gap-2 items-center">
-            <Skeleton className="rounded-full w-[24px] h-[24px]" />
-            <Skeleton className="rounded-full w-[24px] h-[24px]" />
-          </div>
+          <Skeleton className="rounded-full w-[32px] h-[32px]" />
         </div>
       </div>
 

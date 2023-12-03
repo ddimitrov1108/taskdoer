@@ -8,7 +8,7 @@ import { isFuture, isPast, isToday } from "date-fns";
 const sortByDate = (arr) => arr.sort((a, b) => a.dueDate - b.dueDate);
 
 const TasksCompletedStatus = () => (
-  <div className="py-24 grid justify-center items-center gap-6">
+  <div className="py-24 lg:py-32 grid justify-center items-center gap-4">
     <div>
       <Image
         src="/tasks-completed.svg"
@@ -30,7 +30,7 @@ const TasksCompletedStatus = () => (
 );
 
 const TasksNotFound = () => (
-  <div className="py-24 grid justify-center items-center gap-6">
+  <div className="py-24 lg:py-32 grid justify-center items-center gap-4">
     <div>
       <Image
         src="/tasks-notfound.svg"

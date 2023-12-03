@@ -12,7 +12,7 @@ const AddTaskButton = ({ className, ...restProps }) => {
     <Button
       size="sm"
       variant="primary"
-      className={clsx("px-3 flex items-center gap-1 justify-center", className)}
+      className={clsx("px-2 flex items-center gap-1 justify-center", className)}
       onClick={() => taskContext.setOpenNewTaskModal(true)}
       {...restProps}
     >

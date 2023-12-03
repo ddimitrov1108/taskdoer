@@ -16,7 +16,11 @@ const Dropdown = ({
 }) => {
   return (
     <Menu as="div" className={clsx("", className)} {...restProps}>
-      <Menu.Button as="div" className={btnClassName}>
+      <Menu.Button
+        as="div"
+        className={btnClassName}
+        onMouseUp={(e) => e.stopPropagation()}
+      >
         {({ open }) => (
           <>
             {btn}
