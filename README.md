@@ -25,7 +25,8 @@ BASE_URL=http://localhost:3000
 
 npx prisma migrate dev
 
-development mode:
+development:
+
 npm run dev
 # or
 yarn dev
@@ -35,6 +36,7 @@ pnpm dev
 bun dev
 
 production:
+
 npm run build
 yarn build
 # or
