@@ -2,21 +2,13 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ### Future to be added:
 
-- [ ] @IMPORTANT Code cleanup on all components
-
 - [x] Create tasks without project bind
 - [x] Add a "past due" section in task list
-- [ ] API integrity and user privacy performance fixes
-- [ ] @OPTIONAL bcrypt the id of tasks/labels/projects to keep the user's privacy
-- [x] Option to delete all tasks from a project/label
+- [ ] Option to delete all tasks from a project/label
 - [ ] Drag and drop in sections (example: tasks -> completed tasks)
 - [ ] Move or copy a task to another project
-- [ ] Show a sidebar with task information on XL screens and a sidebar on Mobile to LG screens.
-      idea:
-        show details about the task and include interactive task buttons like EDIT/MOVE/COPY/DELETe
-      design:
-        same as the TaskForm but static (without field inputs only plain information)
-- [ ] @OPTIONAL Add interactive buttons to important tasks's page so user can create important task straight out of the box
+- [ ] bcrypt the id of tasks/labels/projects to keep the user privacy
+- [ ] Show sidebar with task information and interactive buttons like edit/move/copy/delete
 
 ## Getting Started
 
