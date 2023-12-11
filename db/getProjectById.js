@@ -50,8 +50,8 @@ const getProjectById = async (id) => {
         labels: labels.map(({ label }) => ({ ...label })),
       })),
     };
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     return null;
   }
 };

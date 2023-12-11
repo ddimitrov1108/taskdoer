@@ -16,8 +16,8 @@ const getProjects = async () => {
         color: true,
       },
     });
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     return {
       data: [],
       count: 0,

@@ -35,8 +35,8 @@ const getImportantTasks = async () => {
       ...restTask,
       labels: labels.map(({ label }) => ({ ...label })),
     }));
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     return null;
   }
 };

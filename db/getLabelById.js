@@ -54,8 +54,8 @@ const getLabelById = async (id) => {
         labels: task.labels.map(({ label }) => ({ ...label })),
       })),
     };
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     return null;
   }
 };
