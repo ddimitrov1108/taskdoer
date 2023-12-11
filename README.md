@@ -1,4 +1,4 @@
-# TaskDoer
+## TaskDoer
 
 #### Application that will help you to manage your day to day and future activities. ✅
 
