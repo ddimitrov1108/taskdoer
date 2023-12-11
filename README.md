@@ -22,7 +22,7 @@ First, run the development server:
 
 npm install
 
-create and configurate .env file
+configurate .env
 NEXTAUTH_SECRET=
 HASH_SALT=
 DATABASE_URL=
@@ -30,7 +30,7 @@ BASE_URL=http://localhost:3000
 
 npx prisma migrate dev
 
-development:
+
 
 npm run dev
 # or
