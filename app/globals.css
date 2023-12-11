@@ -24,10 +24,6 @@ body::-webkit-scrollbar-thumb {
   background-color: #28293D;
 }
 
-.bg-img-cover {
-  background-image: url("../public/taskdoer-app.webp");
-}
-
 .styled-overflow::-webkit-scrollbar-track {
   padding: 2px 0;
 }
