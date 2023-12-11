@@ -17,7 +17,7 @@ const LabelInteractiveButtons = ({ label }) => {
       method: "DELETE",
     })
       .then(() => {
-        enqueueSnackbar("Label deleted successfully", { variant: "success" });
+        enqueueSnackbar("Label deleted successfully!", { variant: "success" });
         router.replace("/todo");
         router.refresh();
       })

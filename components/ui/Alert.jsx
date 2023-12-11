@@ -23,10 +23,10 @@ const alert = cva("div", {
         "text-success-main",
       ],
       error: [
-        "bg-transparent",
+        "bg-error-light/10",
         "border-error-light/20",
-        "border-l-red-500",
-        "text-red-500",
+        "border-l-error-main",
+        "text-error-main",
       ],
       warning: [
         "bg-warning-light/20",
@@ -52,7 +52,7 @@ const Alert = ({ variant = "info", children, ...restProps }) => {
   return (
     <div
       className={clsx(
-        "flex gap-2 mb-4 items-center px-4 py-2.5 border border-l-4 rounded-lg font-semibold",
+        "flex gap-2 mb-4 items-center px-4 py-2.5 border border-l-4 rounded-lg text-sm font-medium",
         alert({ intent: variant })
       )}
       {...restProps}
@@ -61,7 +61,7 @@ const Alert = ({ variant = "info", children, ...restProps }) => {
         <IconComponent />
       </div>
 
-      <span className="text-sm">{children}</span>
+      <p>{children}</p>
     </div>
   );
 };

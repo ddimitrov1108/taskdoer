@@ -7,7 +7,6 @@ import { Alert, Button } from "../ui";
 import { TextField } from "./formik";
 import { labelSchema } from "@/lib/yup-schemas";
 
-const initialValues = { name: "" };
 
 const LabelForm = ({
   initialState = null,
@@ -17,16 +16,18 @@ const LabelForm = ({
   const params = useParams();
   const router = useRouter();
   const [form, setForm] = useForm();
-
+  const initialValues = { name: "" };
+  
   const onSubmitHandler = async (values) => {
     setForm({ loading: true, error: "" });
     const { name } = values;
     const { signal } = new AbortController();
+    const body = JSON.stringify({ name });
 
     if (editMode) {
       await fetch(`/api/labels/${params.id}`, {
         method: "PUT",
-        body: JSON.stringify({ name }),
+        body,
         signal,
       })
         .then((data) => data.json())
@@ -43,7 +44,7 @@ const LabelForm = ({
     } else {
       await fetch("/api/labels", {
         method: "POST",
-        body: JSON.stringify({ name }),
+        body,
         signal,
       })
         .then((data) => data.json())

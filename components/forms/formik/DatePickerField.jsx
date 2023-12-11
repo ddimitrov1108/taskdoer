@@ -26,7 +26,7 @@ const DatePickerField = ({
   form: { errors, touched },
   ...restProps
 }) => {
-  const formatedDate = tryFormatDate(field.value);
+  const formattedDate = tryFormatDate(field.value);
 
   return (
     <div className={clsx("mb-4 min-h-fit", fullWidth ? "w-full" : "w-fit")}>
@@ -40,7 +40,7 @@ const DatePickerField = ({
       <input
         disabled={disabled}
         type="date"
-        placeholder={formatedDate}
+        placeholder={formattedDate}
         className={clsx(
           "bg-black-dark border outline-none px-4 py-2.5 rounded-lg w-full",
           className,

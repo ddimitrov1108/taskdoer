@@ -23,7 +23,7 @@ const ProjectInteractiveButtons = ({ project }) => {
       method: "DELETE",
     })
       .then(() => {
-        enqueueSnackbar("Project deleted successfully", { variant: "success" });
+        enqueueSnackbar("Project deleted successfully!", { variant: "success" });
         router.replace("/todo");
         router.refresh();
       })
