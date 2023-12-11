@@ -19,6 +19,7 @@
 First, run the development server:
 
 ```bash
+
 npm install
 
 create and configurate .env file
@@ -39,7 +40,11 @@ pnpm dev
 # or
 bun dev
 
-production:
+```
+
+Run the production server: 
+
+```bash
 
 npm run build
 npm run start
@@ -52,6 +57,7 @@ pnpm start
 # or
 bun build
 bun start
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
