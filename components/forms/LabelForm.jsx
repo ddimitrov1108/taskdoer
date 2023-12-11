@@ -29,13 +29,16 @@ const LabelForm = ({
         body: JSON.stringify({ name }),
         signal,
       })
-        .then(() => {
-          enqueueSnackbar("Label edited successfully", { variant: "success" });
-          setForm({ loading: false, error: "" });
+        .then((data) => data.json())
+        .then(({ error }) => {
+          if (error) throw error;
+
+          enqueueSnackbar("Label edited successfully!", { variant: "success" });
+          router.refresh();
+          afterFormSubmit();
         })
         .catch((err) => {
           setForm({ ...form, error: err });
-          console.log(err);
         });
     } else {
       await fetch("/api/labels", {
@@ -43,18 +46,20 @@ const LabelForm = ({
         body: JSON.stringify({ name }),
         signal,
       })
-        .then(() => {
-          enqueueSnackbar("Label created successfully", { variant: "success" });
-          setForm({ loading: false, error: "" });
+        .then((data) => data.json())
+        .then(({ error }) => {
+          if (error) throw error;
+
+          enqueueSnackbar("Label created successfully!", {
+            variant: "success",
+          });
+          router.refresh();
+          afterFormSubmit();
         })
         .catch((err) => {
           setForm({ ...form, error: err });
-          console.log(err);
         });
     }
-
-    router.refresh();
-    afterFormSubmit();
   };
 
   return (
@@ -72,7 +77,7 @@ const LabelForm = ({
           label="Enter name"
           placeholder="My Label Name"
           disabled={form.loading}
-          maxLength={40}
+          maxLength={20}
           component={TextField}
           fullWidth
         />

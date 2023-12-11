@@ -7,7 +7,7 @@ import { Alert, Button } from "../ui";
 import { ColorPickerField, TextField } from "./formik";
 import { projectSchema } from "@/lib/yup-schemas";
 
-const initialValues = { name: "", color: "#f44336" };
+const initialValues = { name: "", color: "#b8255f" };
 
 const ProjectForm = ({
   initialState = null,
@@ -32,15 +32,18 @@ const ProjectForm = ({
         }),
         signal,
       })
-        .then(() => {
-          enqueueSnackbar("Project edited successfully", {
+        .then((data) => data.json())
+        .then(({ error }) => {
+          if (error) throw error;
+
+          enqueueSnackbar("Project edited successfully!", {
             variant: "success",
           });
-          setForm({ loading: false, error: "" });
+          router.refresh();
+          afterFormSubmit();
         })
         .catch((err) => {
           setForm({ ...form, error: err });
-          console.log(err);
         });
     } else {
       await fetch("/api/projects", {
@@ -51,22 +54,21 @@ const ProjectForm = ({
         }),
         signal,
       })
-        .then((response) => response.json())
-        .then((data) => {
-          enqueueSnackbar("Project created successfully", {
+        .then((data) => data.json())
+        .then(({ href, error }) => {
+          if (error) throw error;
+
+          enqueueSnackbar("Project created successfully!", {
             variant: "success",
           });
-          setForm({ loading: false, error: "" });
-          router.replace(data.href);
+          router.replace(href);
+          router.refresh();
+          afterFormSubmit();
         })
         .catch((err) => {
           setForm({ ...form, error: err });
-          console.log(err);
         });
     }
-
-    router.refresh();
-    afterFormSubmit();
   };
 
   return (
@@ -83,7 +85,7 @@ const ProjectForm = ({
           label="Enter name"
           placeholder="My Project Name"
           disabled={form.loading}
-          maxLength={40}
+          maxLength={20}
           component={TextField}
           fullWidth
         />
@@ -93,7 +95,7 @@ const ProjectForm = ({
           name="color"
           label="Color"
           disabled={form.loading}
-          maxLength={10}
+          maxLength={9}
           component={ColorPickerField}
           className="mb-8"
           fullWidth

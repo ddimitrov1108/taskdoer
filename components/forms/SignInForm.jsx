@@ -7,10 +7,11 @@ import { Alert, Button, TextLink } from "../ui";
 import { PasswordField, TextField } from "./formik";
 import { useForm } from "../hooks";
 
+const initialValues = { email: "", password: "" };
+
 export default function SignInForm() {
   const router = useRouter();
   const [form, setForm] = useForm();
-  const initialValues = { email: "", password: "" };
 
   const onSubmitHandler = async (values) => {
     setForm({ loading: true, error: "" });

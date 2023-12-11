@@ -46,14 +46,16 @@ const TaskForm = ({
         }),
         signal,
       })
-        .then(() => {
-          enqueueSnackbar("Task edited successfully", { variant: "success" });
-          setForm({ loading: false, error: "" });
+        .then((data) => data.json())
+        .then(({ error }) => {
+          if (error) throw error;
+
+          enqueueSnackbar("Task edited successfully!", { variant: "success" });
           router.refresh();
+          afterFormSubmit();
         })
         .catch((err) => {
           setForm({ ...form, error: err });
-          console.log(err);
         });
     } else {
       await fetch(`/api/tasks`, {
@@ -67,20 +69,18 @@ const TaskForm = ({
         }),
         signal,
       })
-        .then(() => {
-          enqueueSnackbar("Task created successfully", { variant: "success" });
-          setForm({ loading: false, error: "" });
+        .then((data) => data.json())
+        .then(({ error }) => {
+          if (error) throw error;
+
+          enqueueSnackbar("Task created successfully!", { variant: "success" });
           router.refresh();
+          afterFormSubmit();
         })
         .catch((err) => {
           setForm({ ...form, error: err });
-          console.log(err);
         });
     }
-
-    setForm({ loading: false, error: "" });
-    router.refresh();
-    afterFormSubmit();
   };
 
   return (
@@ -105,7 +105,7 @@ const TaskForm = ({
           label="Name"
           placeholder="My Task Name"
           disabled={form.loading}
-          maxLength={40}
+          maxLength={20}
           component={TextField}
           fullWidth
         />
