@@ -1,6 +1,6 @@
 ## TaskDoer
 
-#### Application that will help you to manage your day to day and future activities. ✅
+Application that will help you to manage your day to day and future activities. ✅
 
 ## Tech stack:
 
