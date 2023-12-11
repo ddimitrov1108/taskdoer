@@ -105,7 +105,7 @@ const TaskForm = ({
           label="Name"
           placeholder="My Task Name"
           disabled={form.loading}
-          maxLength={20}
+          maxLength={40}
           component={TextField}
           fullWidth
         />

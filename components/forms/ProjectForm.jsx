@@ -85,7 +85,7 @@ const ProjectForm = ({
           label="Enter name"
           placeholder="My Project Name"
           disabled={form.loading}
-          maxLength={20}
+          maxLength={40}
           component={TextField}
           fullWidth
         />

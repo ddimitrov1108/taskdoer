@@ -29,7 +29,7 @@ CREATE TABLE `labels` (
 CREATE TABLE `projects` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `uid` INTEGER NOT NULL,
-    `name` VARCHAR(20) NOT NULL,
+    `name` VARCHAR(40) NOT NULL,
     `color` VARCHAR(9) NULL DEFAULT '#b8255f',
     `updated_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
@@ -41,7 +41,7 @@ CREATE TABLE `projects` (
 -- CreateTable
 CREATE TABLE `tasks` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(20) NOT NULL,
+    `name` VARCHAR(40) NOT NULL,
     `description` TINYTEXT NOT NULL DEFAULT '',
     `completed` BOOLEAN NOT NULL DEFAULT false,
     `important` BOOLEAN NOT NULL DEFAULT false,
