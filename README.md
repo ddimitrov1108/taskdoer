@@ -5,14 +5,12 @@
 ## Tech stack:
 
 #### Front-end:
-
-Nextjs, Reactjs, TailwindCSS, HeadlessUI, Notistack, React-Icons
+  Nextjs, Reactjs, TailwindCSS, HeadlessUI, Notistack, React-Icons, Formik, Yup, SWR
 
 #### Back-end:
+  Nextjs, NextAuth, Prisma, MySQL
 
-Nextjs, NextAuth, Prisma, MySQL
-
-#### 🔗 Preview 📸:
+### 🔗 Preview 📸:
 
 ![Page from inside the app](/public/taskdoer-app.png)
 
