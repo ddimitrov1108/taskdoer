@@ -3,17 +3,40 @@ import { validateIdParam } from "../../api-utils";
 import { getServerSession } from "next-auth";
 import { nextAuthConfig } from "@/lib/next-auth-config";
 import { NextResponse } from "next/server";
+import { descriptionRegex, sectionNameRegex } from "@/lib/regex";
+import { isValid, parseISO } from "date-fns";
 
 export async function PUT(req, { params }) {
   if (!validateIdParam(params.id))
-    return NextResponse.json({}, { status: 400 });
+    return NextResponse.json({ error: "Bad Request." }, { status: 400 });
+
+  const {
+    labels: incomingLabels,
+    editLabels = false,
+    name,
+    description,
+    dueDate,
+    important,
+  } = await req.json();
+
+  if (!name || !dueDate)
+    return NextResponse.json({ error: "Bad Request." }, { status: 400 });
+
+  if (
+    !sectionNameRegex.test(name) ||
+    (description && !descriptionRegex.test(description)) ||
+    !isValid(parseISO(dueDate)) ||
+    typeof important != "boolean" ||
+    typeof editLabels != "boolean" ||
+    !Array.isArray(incomingLabels)
+  )
+    return NextResponse.json({ error: "Bad Request." }, { status: 400 });
 
   const session = await getServerSession(nextAuthConfig);
-  const data = await req.json();
   const taskId = parseInt(params.id);
 
   try {
-    const task = await prisma.tasks.findUnique({
+    const taskToUpdate = await prisma.tasks.findUnique({
       where: {
         id: taskId,
         uid: session.user.id,
@@ -24,21 +47,26 @@ export async function PUT(req, { params }) {
       },
     });
 
-    if (!task) return NextResponse.json({}, { status: 404 });
-
-    const { editLabels, labels: incomingLabels, ...dataToUpdate } = data;
+    if (!taskToUpdate) return NextResponse.json({}, { status: 404 });
 
     await prisma.tasks.update({
       where: {
-        id: task.id,
+        id: taskToUpdate.id,
       },
-      data: dataToUpdate,
+      data: {
+        name,
+        description,
+        dueDate,
+        important,
+      },
     });
 
     if (editLabels) {
       if (incomingLabels?.length) {
         const incomingLabelIds = incomingLabels.map((label) => label.id);
-        const existingLabelIds = task.labels.map((label) => label.labelId);
+        const existingLabelIds = taskToUpdate.labels.map(
+          (label) => label.labelId
+        );
 
         console.log(incomingLabelIds, existingLabelIds);
 
@@ -51,7 +79,7 @@ export async function PUT(req, { params }) {
         if (differentLabels) {
           await prisma.taskToLabel.deleteMany({
             where: {
-              taskId: task.id,
+              taskId: taskToUpdate.id,
               NOT: {
                 labelId: {
                   in: incomingLabelIds,
@@ -67,7 +95,7 @@ export async function PUT(req, { params }) {
           for (const labelToAdd of labelsToAdd) {
             const existingEntry = await prisma.taskToLabel.findFirst({
               where: {
-                taskId: task.id,
+                taskId: taskToUpdate.id,
                 labelId: labelToAdd.id,
               },
             });
@@ -75,7 +103,7 @@ export async function PUT(req, { params }) {
             if (!existingEntry) {
               await prisma.taskToLabel.create({
                 data: {
-                  taskId: task.id,
+                  taskId: taskToUpdate.id,
                   labelId: labelToAdd.id,
                 },
               });
@@ -85,17 +113,17 @@ export async function PUT(req, { params }) {
       } else {
         await prisma.taskToLabel.deleteMany({
           where: {
-            taskId: task.id,
+            taskId: taskToUpdate.id,
           },
         });
       }
     }
 
     return NextResponse.json({}, { status: 200 });
-  } catch (err) {
-    console.log(err);
-        return NextResponse.json(
-      { error: "Something went wrong. Please try again latyer." },
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { error: "Something went wrong. Please try again later." },
       { status: 500 }
     );
   }
@@ -103,13 +131,13 @@ export async function PUT(req, { params }) {
 
 export async function DELETE(req, { params }) {
   if (!validateIdParam(params.id))
-    return NextResponse.json({}, { status: 400 });
+    return NextResponse.json({ error: "Bad Request." }, { status: 400 });
 
   const session = await getServerSession(nextAuthConfig);
   const taskId = parseInt(params.id);
 
   try {
-    const task = await prisma.tasks.findFirst({
+    const taskToDelete = await prisma.tasks.findFirst({
       where: {
         id: taskId,
         uid: session.user.id,
@@ -120,27 +148,28 @@ export async function DELETE(req, { params }) {
       },
     });
 
-    if (!task) return NextResponse.json({}, { status: 404 });
+    if (!taskToDelete)
+      return NextResponse.json({ error: "Task not found." }, { status: 404 });
 
-    if (task?.labels?.length) {
+    if (taskToDelete?.labels?.length) {
       await prisma.taskToLabel.deleteMany({
         where: {
-          taskId: task.id,
+          taskId: taskToDelete.id,
         },
       });
     }
 
     await prisma.tasks.delete({
       where: {
-        id: task.id,
+        id: taskToDelete.id,
       },
     });
 
     return NextResponse.json({}, { status: 200 });
-  } catch (err) {
-    console.log(err);
-        return NextResponse.json(
-      { error: "Something went wrong. Please try again latyer." },
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { error: "Something went wrong. Please try again later." },
       { status: 500 }
     );
   }

@@ -1,15 +1,23 @@
 import { NextResponse } from "next/server";
-import { validateIdParam } from "../../api-utils";
 import { getServerSession } from "next-auth";
 import { nextAuthConfig } from "@/lib/next-auth-config";
 import { prisma } from "@/lib/prisma";
+import { hexColorRegex, sectionNameRegex } from "@/lib/regex";
+import { validateIdParam } from "../../api-utils";
 
 export async function PUT(req, { params }) {
   if (!validateIdParam(params.id))
-    return NextResponse.json({}, { status: 400 });
+    return NextResponse.json({ error: "Bad Request." }, { status: 400 });
+
+  const { name, color } = await req.json();
+
+  if (!name || !color)
+    return NextResponse.json({ error: "Invalid fields." }, { status: 400 });
+
+  if (!sectionNameRegex.test(name) || !hexColorRegex.test(color))
+    return NextResponse.json({ error: "Invalid fields." }, { status: 400 });
 
   const session = await getServerSession(nextAuthConfig);
-  const data = await req.json();
   const projectId = parseInt(params.id);
 
   try {
@@ -18,14 +26,17 @@ export async function PUT(req, { params }) {
         id: projectId,
         uid: session.user.id,
       },
-      data,
+      data: {
+        name,
+        color,
+      },
     });
 
     return NextResponse.json({}, { status: 200 });
-  } catch (err) {
-    console.log(err);
-        return NextResponse.json(
-      { error: "Something went wrong. Please try again latyer." },
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { error: "Something went wrong. Please try again later." },
       { status: 500 }
     );
   }
@@ -33,13 +44,13 @@ export async function PUT(req, { params }) {
 
 export async function DELETE(req, { params }) {
   if (!validateIdParam(params.id))
-    return NextResponse.json({}, { status: 400 });
+    return NextResponse.json({ error: "Bad Request." }, { status: 400 });
 
   const session = await getServerSession(nextAuthConfig);
   const projectId = parseInt(params.id);
 
   try {
-    const project = await prisma.projects.findUnique({
+    const projectToDelete = await prisma.projects.findUnique({
       where: {
         id: projectId,
         uid: session.user.id,
@@ -53,10 +64,13 @@ export async function DELETE(req, { params }) {
       },
     });
 
-    if (!project) return NextResponse.json({}, { status: 404 });
+    if (!projectToDelete)
+      return NextResponse.json(
+        { error: "Project not found." },
+        { status: 404 }
+      );
 
-    const labelsToDelete = project.tasks.flatMap((task) => task.labels);
-    const taskIdsToDelete = project.tasks.map((task) => task.id);
+    const labelsToDelete = projectToDelete.tasks.flatMap((task) => task.labels);
 
     await prisma.$transaction([
       ...labelsToDelete.map((label) =>
@@ -68,9 +82,7 @@ export async function DELETE(req, { params }) {
       ),
       prisma.tasks.deleteMany({
         where: {
-          id: {
-            in: taskIdsToDelete,
-          },
+          pid: projectToDelete.id,
         },
       }),
       prisma.projects.delete({
@@ -81,10 +93,10 @@ export async function DELETE(req, { params }) {
     ]);
 
     return NextResponse.json({}, { status: 200 });
-  } catch (err) {
-    console.log(err);
-        return NextResponse.json(
-      { error: "Something went wrong. Please try again latyer." },
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { error: "Something went wrong. Please try again later." },
       { status: 500 }
     );
   }

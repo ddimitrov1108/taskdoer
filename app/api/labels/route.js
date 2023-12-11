@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sectionNameRegex } from "@/lib/regex";
-import { doesLabelExist } from "../api-utils";
+import { findLabelDuplicate } from "../api-utils";
 
 export async function GET(req) {
   const session = await getServerSession(nextAuthConfig);
@@ -20,10 +20,10 @@ export async function GET(req) {
     });
 
     return NextResponse.json(labels, { status: 200 });
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     return NextResponse.json(
-      { error: "Something went wrong. Please try again latyer." },
+      { error: "Something went wrong. Please try again later." },
       { status: 500 }
     );
   }
@@ -33,18 +33,21 @@ export async function POST(req) {
   const { name } = await req.json();
 
   if (!name)
-    return NextResponse.json({ error: "Invalid field." }, { status: 400 });
+    return NextResponse.json({ error: "Invalid fields." }, { status: 400 });
 
   if (!sectionNameRegex.test(name))
-    return NextResponse.json({ error: "Invalid field." }, { status: 400 });
+    return NextResponse.json({ error: "Invalid fields." }, { status: 400 });
 
   const session = await getServerSession(nextAuthConfig);
   const formattedName = name.toLowerCase().replace(/\s+/g, "-");
 
   try {
-    const doexExist = await doesLabelExist(session.user.id, formattedName);
+    const isDuplicate = await findLabelDuplicate(
+      session.user.id,
+      formattedName
+    );
 
-    if (doexExist) {
+    if (isDuplicate) {
       return NextResponse.json(
         { error: "The label already exists! Please try another name." },
         { status: 409 }
@@ -59,10 +62,10 @@ export async function POST(req) {
     });
 
     return NextResponse.json({}, { status: 200 });
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     return NextResponse.json(
-      { error: "Something went wrong. Please try again latyer." },
+      { error: "Something went wrong. Please try again later." },
       { status: 500 }
     );
   }
