@@ -169,7 +169,7 @@ const TaskForm = ({
             loading={form.loading}
             fullWidth
           >
-            {editMode ? "Edit Таск" : "Create Таск"}
+            {editMode ? "Edit Task" : "Create Task"}
           </Button>
         </div>
       </Form>

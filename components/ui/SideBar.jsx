@@ -18,19 +18,19 @@ const SideBar = ({
 }) => {
   return (
     <div
-      className={clsx("z-50 w-full h-full", containerClassName)}
+      className={clsx("w-full h-full", containerClassName)}
       {...restProps}
     >
       <div
         onClick={onClose}
         className={clsx(
-          "transition-all fixed top-0 right-0 left-0 bottom-0 bg-black-dark/30 backdrop-blur-sm",
+          "z-40 transition-all fixed top-0 right-0 left-0 bottom-0 bg-black-dark/30 backdrop-blur-sm",
           open ? "block" : "hidden"
         )}
       ></div>
       <div
         className={clsx(
-          "fixed top-0 w-full sm:w-1/2 h-full transition-all ease-in-out duration-300",
+          "z-40 fixed top-0 w-full sm:w-1/2 h-full transition-all ease-in-out duration-300",
           showFrom === "right" && "right-0",
           showFrom === "right"
             ? open
@@ -46,11 +46,11 @@ const SideBar = ({
             <div
               className={clsx(
                 "flex items-center w-full",
-                showLogo ? "justify-between" : "justify-end",
+                showLogo || title ? "justify-between" : "justify-end",
                 headerClassName
               )}
             >
-              {showLogo && <Logo />}
+              {showLogo ? <Logo /> : title}
               <IconButton
                 tabIndex={0}
                 aria-label="Close Menu"

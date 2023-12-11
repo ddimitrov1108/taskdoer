@@ -8,15 +8,15 @@ const HeaderBarNavigation = ({ user, data }) => {
   const { open, toggleOpen } = useSideBarState();
 
   return (
-    <header className="bg-black-main shadow-lg shadow-black-dark flex items-center justify-between z-50 fixed top-0 w-full py-3 px-6 lg:hidden">
+    <header className="bg-black-main shadow-lg shadow-black-dark flex items-center justify-between z-20 fixed top-0 w-full py-3 px-6 lg:hidden">
       <Logo />
 
       <SideBar
         open={open}
         onClose={toggleOpen}
         className="bg-black-main px-0"
-        headerClassName="pt-6 px-6"
-        bodyClassName="w-full grid gap-4 p-6 bg-inherit"
+        headerClassName="pt-4 px-6"
+        bodyClassName="w-full grid gap-4 px-6 py-4 bg-inherit"
       >
         <UserDropdownMenu user={user} />
         <NavigationList data={data} onSideBarClose={() => toggleOpen()} />

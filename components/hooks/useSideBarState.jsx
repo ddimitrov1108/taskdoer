@@ -5,7 +5,8 @@ const useSideBarState = (initialState = false) => {
   const toggleOpen = () => setOpen(!open);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "auto";
+    if (window.innerWidth < 1280)
+      document.body.style.overflow = open ? "hidden" : "auto";
 
     return () => {
       document.body.style.overflow = "auto";
