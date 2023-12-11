@@ -17,25 +17,51 @@ const ProjectInteractiveButtons = ({ project }) => {
   const router = useRouter();
   const [openEditProjectModal, setOpenEditProjectModal] = useState(false);
   const [openDeleteProjectModal, setOpenDeleteProjectModal] = useState(false);
+  const [openDeleteProjectTasks, setOpenDeleteProjectTasks] = useState(false);
 
   const deleteProject = async () => {
     await fetch(`/api/projects/${params.id}`, {
       method: "DELETE",
     })
-      .then(() => {
-        enqueueSnackbar("Project deleted successfully!", { variant: "success" });
+      .then((data) => data.json())
+      .then(({ error }) => {
+        if (error) throw error;
+
+        enqueueSnackbar("Project deleted successfully!", {
+          variant: "success",
+        });
         router.replace("/todo");
         router.refresh();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        enqueueSnackbar(error, { variant: "error" });
       });
 
     setOpenDeleteProjectModal(false);
   };
 
+  const deleteAllTasks = async () => {
+    await fetch(`/api/projects/${params.id}/delete-tasks`, {
+      method: "DELETE",
+    })
+      .then((data) => data.json())
+      .then(({ error }) => {
+        if (error) throw error;
+
+        enqueueSnackbar("Tasks deleted successfully!", {
+          variant: "success",
+        });
+        router.refresh();
+      })
+      .catch((error) => {
+        enqueueSnackbar(error, { variant: "error" });
+      });
+
+    setOpenDeleteProjectTasks(false);
+  };
+
   const onEditProjectHandler = () => setOpenEditProjectModal(true);
-  const onDeleteAllTasksHandler = () => alert("delete all tasks func");
+  const onDeleteAllTasksHandler = () => setOpenDeleteProjectTasks(true);
   const onDeleteProjectHandler = () => setOpenDeleteProjectModal(true);
 
   const projectInteractions = [
@@ -80,6 +106,13 @@ const ProjectInteractiveButtons = ({ project }) => {
         open={openDeleteProjectModal}
         setOpen={setOpenDeleteProjectModal}
         onSubmit={deleteProject}
+      />
+
+      <DeleteConfirmationModal
+        text="Do you want to delete all tasks in this project?"
+        open={openDeleteProjectTasks}
+        setOpen={setOpenDeleteProjectTasks}
+        onSubmit={deleteAllTasks}
       />
 
       <div className="min-w-full md:min-w-fit flex items-center justify-between gap-2">
