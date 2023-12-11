@@ -10,7 +10,7 @@
 #### Back-end:
   Nextjs, NextAuth, Prisma, MySQL
 
-### Preview 📸:
+### Preview:
 
 ![Page from inside the app](/public/taskdoer-app.png)
 
