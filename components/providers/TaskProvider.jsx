@@ -24,7 +24,7 @@ const TaskProvider = ({ children }) => {
   );
 
   const setCompleted = async (task) => {
-    await fetch(`/api/tasks/${task.id}`, {
+    await fetch(`/api/tasks/${task.id}/complete`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -32,17 +32,20 @@ const TaskProvider = ({ children }) => {
         editLabels: false,
       }),
     })
-      .then(() => {
+      .then((data) => data.json())
+      .then(({ error }) => {
+        if (error) throw error;
+
         if (!task.completed) playSound();
         router.refresh();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        enqueueSnackbar(error, { variant: "error" });
       });
   };
 
   const setImportant = async (task) => {
-    await fetch(`/api/tasks/${task.id}`, {
+    await fetch(`/api/tasks/${task.id}/important`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -50,11 +53,14 @@ const TaskProvider = ({ children }) => {
         editLabels: false,
       }),
     })
-      .then(() => {
+      .then((data) => data.json())
+      .then(({ error }) => {
+        if (error) throw error;
+        
         router.refresh();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        enqueueSnackbar(error, { variant: "error" });
       });
   };
 
@@ -62,12 +68,15 @@ const TaskProvider = ({ children }) => {
     await fetch(`/api/tasks/${selectedTask?.id}`, {
       method: "DELETE",
     })
-      .then(() => {
+      .then((data) => data.json())
+      .then(({ error }) => {
+        if (error) throw error;
+
         enqueueSnackbar("Task deleted.", { variant: "info" });
         router.refresh();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        enqueueSnackbar(error, { variant: "error" });
       });
 
     setOpenDeleteTaskModal(false);
