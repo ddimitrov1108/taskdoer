@@ -1,15 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-### Future to be added:
-
-- [x] Create tasks without project bind
-- [x] Add a "past due" section in task list
-- [ ] Option to delete all tasks from a project/label
-- [ ] Drag and drop in sections (example: tasks -> completed tasks)
-- [ ] Move or copy a task to another project
-- [ ] bcrypt the id of tasks/labels/projects to keep the user privacy
-- [ ] Show sidebar with task information and interactive buttons like edit/move/copy/delete
-
 ## Getting Started
 
 First, run the development server:
@@ -38,11 +28,16 @@ bun dev
 production:
 
 npm run build
+npm run start
+# or
 yarn build
+yarn start
 # or
 pnpm build
+pnpm start
 # or
 bun build
+bun start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
