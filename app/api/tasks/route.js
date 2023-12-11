@@ -48,6 +48,9 @@ export async function POST(req) {
     return NextResponse.json({}, { status: 200 });
   } catch (err) {
     console.log(err);
-    return NextResponse.json({}, { status: 500 });
+        return NextResponse.json(
+      { error: "Something went wrong. Please try again latyer." },
+      { status: 500 }
+    );
   }
 }

@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { validateIdParam } from "../../api-utils";
+import { doesLabelExist, validateIdParam } from "../../api-utils";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { nextAuthConfig } from "@/lib/next-auth-config";
@@ -8,23 +8,45 @@ export async function PUT(req, { params }) {
   if (!validateIdParam(params.id))
     return NextResponse.json({}, { status: 400 });
 
+  const { name } = await req.json();
+
+  if (!name)
+    return NextResponse.json({ error: "Invalid field." }, { status: 400 });
+
+  if (!sectionNameRegex.test(name))
+    return NextResponse.json({ error: "Invalid field." }, { status: 400 });
+
   const session = await getServerSession(nextAuthConfig);
-  const data = await req.json();
-  const id = parseInt(params.id);
+  const formattedName = name.toLowerCase().replace(/\s+/g, "-");
+  const labelId = parseInt(params.id);
 
   try {
+    const doexExist = await doesLabelExist(session.user.id, formattedName);
+
+    if (doexExist) {
+      return NextResponse.json(
+        { error: "The label already exists! Please try another name." },
+        { status: 409 }
+      );
+    }
+
     await prisma.labels.update({
       where: {
-        id,
+        id: labelId,
         uid: session.user.id,
       },
-      data,
+      data: {
+        name: formattedName,
+      },
     });
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {
     console.log(err);
-    return NextResponse.json({}, { status: 500 });
+    return NextResponse.json(
+      { error: "Something went wrong. Please try again latyer." },
+      { status: 500 }
+    );
   }
 }
 export async function DELETE(req, { params }) {
@@ -62,6 +84,9 @@ export async function DELETE(req, { params }) {
     return NextResponse.json({}, { status: 200 });
   } catch (err) {
     console.log(err);
-    return NextResponse.json({}, { status: 500 });
+    return NextResponse.json(
+      { error: "Something went wrong. Please try again latyer." },
+      { status: 500 }
+    );
   }
 }

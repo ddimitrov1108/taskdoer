@@ -2,6 +2,8 @@ import { nextAuthConfig } from "@/lib/next-auth-config";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { sectionNameRegex } from "@/lib/regex";
+import { doesLabelExist } from "../api-utils";
 
 export async function GET(req) {
   const session = await getServerSession(nextAuthConfig);
@@ -20,34 +22,48 @@ export async function GET(req) {
     return NextResponse.json(labels, { status: 200 });
   } catch (err) {
     console.log(err);
-    return NextResponse.json({}, { status: 500 });
+    return NextResponse.json(
+      { error: "Something went wrong. Please try again latyer." },
+      { status: 500 }
+    );
   }
 }
 
 export async function POST(req) {
-  const session = await getServerSession(nextAuthConfig);
   const { name } = await req.json();
-  const formatedName = name.toLowerCase().replace(/\s+/g, "-");
+
+  if (!name)
+    return NextResponse.json({ error: "Invalid field." }, { status: 400 });
+
+  if (!sectionNameRegex.test(name))
+    return NextResponse.json({ error: "Invalid field." }, { status: 400 });
+
+  const session = await getServerSession(nextAuthConfig);
+  const formattedName = name.toLowerCase().replace(/\s+/g, "-");
 
   try {
-    const doesExist = await prisma.labels.findFirst({
-      where: {
+    const doexExist = await doesLabelExist(session.user.id, formattedName);
+
+    if (doexExist) {
+      return NextResponse.json(
+        { error: "The label already exists! Please try another name." },
+        { status: 409 }
+      );
+    }
+
+    await prisma.labels.create({
+      data: {
         uid: session.user.id,
-        name: formatedName,
+        name: formattedName,
       },
     });
-
-    if (!doesExist)
-      await prisma.labels.create({
-        data: {
-          uid: session.user.id,
-          name: formatedName,
-        },
-      });
 
     return NextResponse.json({}, { status: 200 });
   } catch (err) {
     console.log(err);
-    return NextResponse.json({}, { status: 500 });
+    return NextResponse.json(
+      { error: "Something went wrong. Please try again latyer." },
+      { status: 500 }
+    );
   }
 }
