@@ -4,10 +4,10 @@ Application that will help you to manage your day to day and future activities.
 
 ### Tech stack:
 
-#### Front-end:
+**Front-end:**
   Nextjs, Reactjs, TailwindCSS, HeadlessUI, Notistack, React-Icons, Formik, Yup, SWR
 
-#### Back-end:
+**Back-end:**
   Nextjs, NextAuth, Prisma, MySQL
 
 ### Preview:
