@@ -9,12 +9,13 @@ const TaskDetailsContainer = ({ task, open, setOpen }) => {
   return (
     <div
       className={clsx(
-        "hidden bg-white z-40 h-full overflow-auto styled-overflow",
+        "transition-all hidden bg-black-main h-full overflow-auto styled-overflow",
         open && "xl:block fixed top-0 right-0 bottom-0 w-96"
       )}
     >
       <div className="px-6 py-4">
-        <div className="flex items-center w-full justify-end">
+        <div className="flex items-center w-full justify-between">
+          <h1 className="font-medium">Task Details</h1>
           <IconButton
             tabIndex={0}
             aria-label="Close Menu"
@@ -32,7 +33,7 @@ const TaskDetailsContainer = ({ task, open, setOpen }) => {
             <div>
               <Label
                 label="Name"
-                className="-mb-2 text-base"
+                className="text-main"
                 ignoreResponsiveStyle
               />
               {task.name}
@@ -41,7 +42,7 @@ const TaskDetailsContainer = ({ task, open, setOpen }) => {
             <div>
               <Label
                 label="Description"
-                className="-mb-2 text-base"
+                className="text-main"
                 ignoreResponsiveStyle
               />
               {task.description}
@@ -50,10 +51,10 @@ const TaskDetailsContainer = ({ task, open, setOpen }) => {
             <div>
               <Label
                 label="Due Date"
-                className="-mb-2 text-base"
+                className="text-main"
                 ignoreResponsiveStyle
               />
-              {format(toDate(parseISO(task.dueDate)), "dd/MM/yyyy")}
+              {format(task.dueDate, "dd/MM/yyyy")}
             </div>
           </div>
         )}

@@ -14,11 +14,11 @@ const TaskInteractiveButtons = ({ task }) => {
 
   const onTaskDetailsHandler = () => {
     taskContext.setSelectedTask(task);
-    taskContext.setOpenDetailsTaskModal(true);
+    taskContext.setShowTaskDetailsSideBar(true);
   };
   const onTaskEditHandler = () => {
     taskContext.setSelectedTask(task);
-    taskContext.setOpenDetailsTaskModal(true);
+    taskContext.setOpenTaskEditModal(true);
   };
 
   const onTaskDeleteHandler = () => {

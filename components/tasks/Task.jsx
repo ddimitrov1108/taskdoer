@@ -20,8 +20,8 @@ const Task = ({ task }) => {
   };
 
   const onTaskClickHandler = () => {
-    // taskContext.setSelectedTask(task);
-    // taskContext.setOpenDetailsTaskModal(true);
+    taskContext.setSelectedTask(task);
+    taskContext.setShowTaskDetailsSideBar(true);
   };
 
   const onCompletedHandler = () => taskContext.setCompleted(task);
@@ -55,9 +55,7 @@ const Task = ({ task }) => {
             <h1
               className={clsx(
                 "transition-all font-[500] w-full max-w-[400px] truncate ...",
-                task.completed
-                  ? "line-through text-main"
-                  : "text-light group-hover:text-light"
+                task.completed ? "line-through text-main" : "text-light"
               )}
             >
               {task.name}
@@ -81,7 +79,12 @@ const Task = ({ task }) => {
             </div>
           </div>
 
-          <div className="w-fit flex items-center">
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="w-fit flex items-center"
+          >
             <IconButton
               className={clsx(
                 "p-1 transition-all text-xl",
@@ -89,10 +92,7 @@ const Task = ({ task }) => {
                   ? "text-warning-main"
                   : "text-main hover:text-light"
               )}
-              onClick={(e) => {
-                e.stopPropagation();
-                onImportantHandler();
-              }}
+              onClick={onImportantHandler}
             >
               <HiStar />
             </IconButton>

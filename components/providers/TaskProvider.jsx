@@ -3,7 +3,10 @@ import { createContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DeleteConfirmationModal, TaskModal } from "../modals";
 import { enqueueSnackbar } from "notistack";
-import { useSound } from "../hooks";
+import { useSideBarState, useSound } from "../hooks";
+import { TaskDetailsContainer } from "../tasks";
+import { TaskDetailsSideBar } from "../sidebars";
+import clsx from "clsx";
 
 export const TaskContext = createContext(null);
 
@@ -12,7 +15,9 @@ const TaskProvider = ({ children }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [openNewTaskModal, setOpenNewTaskModal] = useState(false);
   const [openDeleteTaskModal, setOpenDeleteTaskModal] = useState(false);
-  const [openDetailsTaskModal, setOpenDetailsTaskModal] = useState(false);
+  const [openTaskEditModal, setOpenTaskEditModal] = useState(false);
+  const { open: showTaskDetailsSideBar, setOpen: setShowTaskDetailsSideBar } =
+    useSideBarState(false);
 
   const [isPlaying, playSound, stopSound] = useSound(
     "http://localhost:3000/task-completed.wav"
@@ -76,8 +81,9 @@ const TaskProvider = ({ children }) => {
         setCompleted,
         setImportant,
         setOpenNewTaskModal,
-        setOpenDetailsTaskModal,
+        setOpenTaskEditModal,
         setOpenDeleteTaskModal,
+        setShowTaskDetailsSideBar,
       }}
     >
       <TaskModal
@@ -89,10 +95,10 @@ const TaskProvider = ({ children }) => {
       <TaskModal
         editMode={true}
         initialState={selectedTask}
-        open={openDetailsTaskModal}
-        setOpen={setOpenDetailsTaskModal}
+        open={openTaskEditModal}
+        setOpen={setOpenTaskEditModal}
         afterFormSubmit={() => {
-          setOpenDetailsTaskModal(false);
+          setOpenTaskEditModal(false);
           setSelectedTask(null);
         }}
       />
@@ -104,7 +110,22 @@ const TaskProvider = ({ children }) => {
         onSubmit={deleteTask}
       />
 
-      <div>{children}</div>
+      <TaskDetailsSideBar
+        open={showTaskDetailsSideBar}
+        onClose={() => setShowTaskDetailsSideBar(false)}
+        task={selectedTask}
+      />
+
+      <div
+        className={clsx(showTaskDetailsSideBar && "transition-all xl:mr-96")}
+      >
+        {children}
+        <TaskDetailsContainer
+          open={showTaskDetailsSideBar}
+          setOpen={() => setShowTaskDetailsSideBar(false)}
+          task={selectedTask}
+        />
+      </div>
     </TaskContext.Provider>
   );
 };
