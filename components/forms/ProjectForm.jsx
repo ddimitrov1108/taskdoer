@@ -42,8 +42,8 @@ const ProjectForm = ({
           router.refresh();
           afterFormSubmit();
         })
-        .catch((err) => {
-          setForm({ ...form, error: err });
+        .catch((error) => {
+          setForm({ ...form, error: error });
         });
     } else {
       await fetch("/api/projects", {
@@ -65,8 +65,8 @@ const ProjectForm = ({
           router.refresh();
           afterFormSubmit();
         })
-        .catch((err) => {
-          setForm({ ...form, error: err });
+        .catch((error) => {
+          setForm({ ...form, error: error });
         });
     }
   };

@@ -16,13 +16,16 @@ const LabelInteractiveButtons = ({ label }) => {
     await fetch(`/api/labels/${params.id}`, {
       method: "DELETE",
     })
-      .then(() => {
+      .then((data) => data.json())
+      .then(({ error }) => {
+        if(error) throw error;
+        
         enqueueSnackbar("Label deleted successfully!", { variant: "success" });
         router.replace("/todo");
         router.refresh();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        enqueueSnackbar(error, { variant: "error" });
       });
 
     setOpenDeleteLabelModal(false);
