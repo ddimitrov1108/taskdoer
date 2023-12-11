@@ -2,7 +2,7 @@
 
 Application that will help you to manage your day to day and future activities.
 
-## Tech stack:
+### Tech stack:
 
 #### Front-end:
   Nextjs, Reactjs, TailwindCSS, HeadlessUI, Notistack, React-Icons, Formik, Yup, SWR
