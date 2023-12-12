@@ -19,8 +19,8 @@ Application that will help you to manage your day to day and future activities.
 First, run the development server:
 
 ```bash
-
 npm install
+```
 
 configurate .env
 NEXTAUTH_SECRET=
@@ -28,9 +28,8 @@ HASH_SALT=
 DATABASE_URL=
 BASE_URL=http://localhost:3000
 
+```bash
 npx prisma migrate dev
-
-
 
 npm run dev
 # or
