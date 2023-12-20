@@ -22,11 +22,14 @@ First, run the development server:
 npm install
 ```
 
-configurate .env
+Configurate .env
+
+```bash
 NEXTAUTH_SECRET=
 HASH_SALT=
 DATABASE_URL=
 BASE_URL=http://localhost:3000
+```
 
 ```bash
 npx prisma migrate dev
